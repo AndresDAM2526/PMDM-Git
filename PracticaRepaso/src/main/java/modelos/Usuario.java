@@ -8,7 +8,7 @@ abstract public class Usuario {
     protected String email;
     protected String password;
 
-    public Usuario(int id, String nombre, String email) {
+    public Usuario() {
         this.id = id;
         this.nombre = nombre;
     }
