@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var miBoton: Button   //Es obligatorio iniciar las variables, con  lateinit-> se inicializa mas tarde || nombre objeto:tipo
     private lateinit var edit_text: EditText
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //Invocación método clase padre
         super.onCreate(savedInstanceState)
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private fun inicializarComponentes() {
         //En este método inicializo los componentes visuales de mi layout
         //Vinculo mi boton con el boton del layuout
-        this.miBoton=findViewById<Button>(R.id.button6)
+        this.miBoton=findViewById<Button>(R.id.miBoton)
         //Vinculo mi editText con el editText del layout
         this.edit_text=findViewById<EditText>(R.id.editTextText)
 
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             miToast.show()
         }
 
-        mibinding.button6.setOnClickListener {
+        mibinding.miBoton.setOnClickListener {
             Toast.makeText(this,mibinding.editTextText.text, LENGTH_LONG)
         }
 
