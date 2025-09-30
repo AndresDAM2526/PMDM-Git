@@ -1,0 +1,23 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id boton1
+id boton2
+id boton3
+id botonEnviar
+id botonJugar
+id main
+id textView
+id texto1EditText
+id texto2EditText
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Base.Theme.Ejercicio2
+style Theme.Ejercicio2
+xml backup_rules
+xml data_extraction_rules
