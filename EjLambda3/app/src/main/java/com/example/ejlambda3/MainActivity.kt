@@ -1,4 +1,4 @@
-package com.example.ejlambda2
+package com.example.ejlambda3
 
 import android.os.Bundle
 import android.widget.Button
@@ -11,21 +11,19 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var editTextNum: EditText
-    private lateinit var btNumMagico: Button
+    private lateinit var btCapicua: Button
+    private lateinit var etNum: EditText
 
-    var magico:(Int)-> Boolean={
-        a ->
-        var num= Math.pow(a.toDouble(),3.0)
-        var numString=num.toString()
-        var acumulado: Int=0
-        for (i in numString){
-            if(i.isDigit()){
-                acumulado+=i.toString().toInt()
-            }
-
+    var capicua:(Int)-> Boolean={
+        a: Int->
+        var cadena=a.toString()
+        var cadenaInversa=""
+        for (i in cadena.length-1 downTo 0){
+            cadenaInversa+=cadena[i]
         }
-        num.toInt() ==acumulado
+
+        cadena==cadenaInversa
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +38,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun inicializarComponentes(){
-        this.editTextNum=findViewById<EditText>(R.id.EditTextNum)
-        this.btNumMagico=findViewById<Button>(R.id.btNumMagico)
-        btNumMagico.setOnClickListener { var resultado=magico(editTextNum.text.toString().toInt())
+        this.btCapicua=findViewById<Button>(R.id.btCapicua)
+        this.etNum=findViewById<EditText>(R.id.etNum)
+        btCapicua.setOnClickListener {
+            var resultado=capicua(etNum.text.toString().toInt())
             if(resultado){
-                Toast.makeText(this,"El numero es mágico", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"Capicua", Toast.LENGTH_LONG).show()
             }else{
-                Toast.makeText(this,"El numero no es mágico", Toast.LENGTH_LONG).show()
-            } }
-
+                Toast.makeText(this,"No capicua", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }
