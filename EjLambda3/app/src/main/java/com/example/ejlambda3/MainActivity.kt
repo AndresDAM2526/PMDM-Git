@@ -25,6 +25,19 @@ class MainActivity : AppCompatActivity() {
         cadena==cadenaInversa
 
     }
+
+    //Solución dada por Roberto
+    var es_capicua:(Int)-> Boolean={ num:Int->
+        var capicua=false
+        //Convierto el número a String y le doy la vuelta
+        var numeroAlReves=num as String
+        numeroAlReves=numeroAlReves.reversed()
+        capicua=(numeroAlReves==num as String)
+        capicua
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

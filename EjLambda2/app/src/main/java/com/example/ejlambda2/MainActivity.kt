@@ -27,6 +27,31 @@ class MainActivity : AppCompatActivity() {
         }
         num.toInt() ==acumulado
     }
+
+
+    //Solución dada por Roberto
+    val es_magico:(Int)->Boolean={ num:Int ->
+        var magico=true
+        var cubo=Math.pow(num as Double, 3 as Double)
+        var sumDigitos=0
+        var digito=cubo as Int %10
+        var cociente: Int=cubo as Int
+        //VOy separando todos los digitos del cubo
+        while (cociente!=0) {
+            digito=cociente%10
+            //preparo el bucle para la siguiente iteración
+            cociente=cociente/10
+            sumDigitos+=digito
+        }
+        magico=(sumDigitos==num as Int)
+        magico
+
+
+
+
+        magico
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

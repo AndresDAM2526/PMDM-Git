@@ -23,6 +23,22 @@ class MainActivity : AppCompatActivity() {
         }
         contador==2
     }
+
+
+    //Solución de Roberto
+    var es_primo:(Int) -> Boolean={ num:Int->
+    var primo=true
+    var divisor=2
+    //Recorremos todos los valores entre 2 y num/2
+    while(primo && divisor<(num/2)){
+        //Comprobamos si el número es divisible entre el divisor
+        primo=(num%divisor!=0)
+        //Pasamos al siguiente valor de divisor
+        divisor++
+    }
+    primo
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
