@@ -8,11 +8,13 @@ abstract public class Usuario {
     protected String email;
     protected String password;
 
-    public Usuario() {
+
+    public Usuario(int id, String nombre, String email, String password) {
         this.id = id;
         this.nombre = nombre;
+        this.email = email;
+        this.password = password;
     }
-
 
     public int getID() {
         return this.id;
@@ -50,4 +52,15 @@ abstract public class Usuario {
         return "ID: " + this.id + "\nNombre: " + this.nombre + "\nEmail: " + this.email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return id == usuario.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

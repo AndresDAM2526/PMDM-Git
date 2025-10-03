@@ -11,8 +11,8 @@ public class Profesor extends Usuario{
     public int irpf;
     public Cargo cargo;
 
-    public Profesor(String especialidad, LocalDate fecha_comienzo, int irpf){
-        super();
+    public Profesor(int id, String nombre, String email, String password,String especialidad, LocalDate fecha_comienzo, int irpf){
+        super(id,nombre,email,password);
         this.especialidad=especialidad;
         this.fecha_comienzo=fecha_comienzo;
         this.irpf=irpf;
