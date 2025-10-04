@@ -56,4 +56,13 @@ public class GestorUsuarios implements GestionUsuarios {
         }
         return usuariosEncontrados;
     }
+
+    public Usuario existeUsuario(int idUsuario){
+        for (Usuario us:usuarios){
+            if(us.getID()==idUsuario){
+                return us;
+            }
+        }
+        return null;
+    }
 }

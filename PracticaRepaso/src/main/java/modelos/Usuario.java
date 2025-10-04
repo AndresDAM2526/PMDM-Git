@@ -9,6 +9,7 @@ abstract public class Usuario {
     protected String password;
 
 
+
     public Usuario(int id, String nombre, String email, String password) {
         this.id = id;
         this.nombre = nombre;
