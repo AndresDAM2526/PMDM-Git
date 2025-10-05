@@ -1,19 +1,30 @@
 package com.example.practicarepaso;
 
+import com.example.practicarepaso.controller.LoginController;
 import javafx.application.Application;
-import modelos.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import com.example.practicarepaso.modelos.*;
+import com.example.practicarepaso.util.R;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Launcher {
+public class Launcher extends Application{
 
-
+    public static GestorUsuarios gestorUsuarios=new GestorUsuarios();
     public static void main(String[] args) {
+
         Scanner teclado=new Scanner(System.in);
-        GestorUsuarios gestorUsuarios=new GestorUsuarios();
+
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
             int opcionUsuario=-1;
@@ -33,19 +44,21 @@ public class Launcher {
                         tipoUsuario=teclado.nextInt();
                         switch (tipoUsuario){
                             case 0:
-                                System.out.println("Introduzca el ID del usuario:");
+                                System.out.print("Introduzca el ID del usuario:");
                                 idUsuario=teclado.nextInt();
                                 teclado.nextLine();
-                                System.out.println("Introduzca el nombre:");
+                                System.out.print("Introduzca el nombre:");
                                 nombreUsuario=teclado.nextLine();
-                                System.out.println("Introduzca el email:");
+                                System.out.print("Introduzca el email:");
                                 email=teclado.nextLine();
-                                System.out.println("Introduzca la contraseña:");
+                                System.out.print("Introduzca la contraseña:");
                                 pass=teclado.nextLine();
-                                System.out.println("Introduzca el curso:");
+                                System.out.print("Introduzca el curso:");
                                 curso=teclado.nextLine();
                                 Estudiante est=new Estudiante(idUsuario,nombreUsuario,email,pass,curso);
                                 gestorUsuarios.agregarUsuario(est);
+                                Thread.sleep(500);
+                                System.out.println("Estudiante añadido correctamente");
                                 break;
                             case 1:
                                 String especialidad="";
@@ -54,26 +67,33 @@ public class Launcher {
                                 int irpf;
                                 String cargoStr;
                                 Cargo cargo;
-                                System.out.println("Introduzca el ID del usuario:");
+                                System.out.print("Introduzca el ID del usuario:");
                                 idUsuario=teclado.nextInt();
                                 teclado.nextLine();
-                                System.out.println("Introduzca el nombre:");
+                                System.out.print("Introduzca el nombre:");
                                 nombreUsuario=teclado.nextLine();
-                                System.out.println("Introduzca el email:");
+                                System.out.print("Introduzca el email:");
                                 email=teclado.nextLine();
-                                System.out.println("Introduzca la contraseña:");
+                                System.out.print("Introduzca la contraseña:");
                                 pass=teclado.nextLine();
-                                System.out.println("Introduzca la especialidad:");
+                                System.out.print("Introduzca la especialidad:");
                                 especialidad=teclado.nextLine();
-                                System.out.println("Introduzca su fecha de alta");
+                                System.out.print("Introduzca su fecha de alta:");
+                                fechaComienzo=teclado.nextLine();
                                 fechaComienzoLd=LocalDate.parse(fechaComienzo,formatter);
-                                System.out.println("Intoduzca el IRPF:");
+                                if(fechaComienzoLd.isAfter(LocalDate.now())){
+                                    System.out.println("La fecha de fecha es incorrecta, se iniciará el proceso de nuevo");
+                                    break;
+                                }
+                                System.out.print("Intoduzca el IRPF:");
                                 irpf=teclado.nextInt();
                                 teclado.nextLine();
-                                System.out.println("Introduzca su cargo(Director,Secretario,Profesor):");
+                                System.out.print("Introduzca su cargo(Director,Secretario,Profesor):");
                                 cargoStr=teclado.nextLine();
                                 cargo=Cargo.valueOf(cargoStr);
                                 Profesor pf=new Profesor(idUsuario,nombreUsuario,email,pass,especialidad,fechaComienzoLd,irpf,cargo);
+                                gestorUsuarios.agregarUsuario(pf);
+                                System.out.println("Trabajador añadido correctamente");
                                 break;
                             default:
                                 System.out.println("Opción incorrecta");
@@ -82,15 +102,18 @@ public class Launcher {
                         break;
                     case 2:
                         try {
+                            ArrayList<Usuario> usuariosEncontrados=new ArrayList<>();
                             System.out.println("---Listar usuarios---");
                             tipoUsuarioMenu();
                             int tipoUsuarioListar=teclado.nextInt();
                             switch (tipoUsuarioListar){
                                 case 0:
-                                    gestorUsuarios.listarUsuario(0);
+                                    usuariosEncontrados=gestorUsuarios.listarUsuario(0);
+                                    System.out.println(usuariosEncontrados);
                                     break;
                                 case 1:
-                                    gestorUsuarios.listarUsuario(1);
+                                    usuariosEncontrados=gestorUsuarios.listarUsuario(1);
+                                    System.out.println(usuariosEncontrados);
                                     break;
                                 default:
                                     System.out.println("Opción incorrecta");
@@ -99,7 +122,7 @@ public class Launcher {
                         }catch (InputMismatchException e){
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
-
+                        break;
                     case 3:
                         try {
                             System.out.println("---Eliminar usuario---");
@@ -110,6 +133,7 @@ public class Launcher {
                         }catch (InputMismatchException e){
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
+                        break;
                     case 4:
                         try {
                             int irpfSalario;
@@ -125,34 +149,78 @@ public class Launcher {
                         }catch (InputMismatchException e){
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
+                        break;
                     case 5:
+                        int idUsuarioNomina;
+                        System.out.println("---Generar nómina---");
+                        System.out.print("Introduzca el ID del usuario:");
+                        idUsuarioNomina=teclado.nextInt();
+                        Usuario usuarioEncontrado=gestorUsuarios.existeUsuario(idUsuarioNomina);
+                        if(usuarioEncontrado!=null) {
+                            Profesor profesorEncontrado=(Profesor) usuarioEncontrado;
+                            gestorUsuarios.generarNomina(profesorEncontrado.fecha_comienzo, idUsuarioNomina);
+                            break;
+                        }else {
+                            System.out.println("No se ha encontrado el profesor");
+                            break;
+                        }
+
+                    case 6:
+                        launch();
+                        break;
+                    case 7:
                         System.out.println("Saliendo . . .");
+                        break;
+
+                    default:
+                        System.out.println("Opción incorrecta");
                         break;
                 }
             }
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException | InterruptedException e) {
             System.out.println("Tipo de dato erroneo");
         }
 
 
-        //Application.launch(HelloApplication.class, args)
+
+    }
+    public void start(Stage stage) throws IOException {
+       LoginController controller=new LoginController();
+       FXMLLoader loader=new FXMLLoader();
+       loader.setLocation(R.getUI("login.fxml"));
+       loader.setController(controller);
+       VBox vBox=loader.load();
+       controller.setGestionUsuarios(gestorUsuarios);
+       Scene scene=new Scene(vBox);
+       stage.setScene(scene);
+       stage.show();
+       stage.setTitle("Inicio de sesion");
+    }
+    public void init() throws Exception{
+        super.init();
+    }
+
+    public void stop() throws Exception{
+        super.stop();
     }
 
     public static void menuPrincipal(){
         System.out.println("---Menú principal---");
-        System.out.println("1-Dar de alta a un usuario");
-        System.out.println("2-Mostrar usuarios en función del tipo");
-        System.out.println("3-Eliminar usuario");
-        System.out.println("4-Establecer IRPF");
-        System.out.println("5-Salir");
-        System.out.print("Elija una opción:");
+        System.out.println("\t1-Dar de alta a un usuario");
+        System.out.println("\t2-Mostrar usuarios en función del tipo");
+        System.out.println("\t3-Eliminar usuario");
+        System.out.println("\t4-Establecer IRPF");
+        System.out.println("\t5-Generar nomina");
+        System.out.println("\t6-Interfaz gráfica");
+        System.out.println("\t7-Salir");
+        System.out.print("\tElija una opción:");
     }
 
     public static void tipoUsuarioMenu(){
         System.out.println("Tipos de usuario");
-        System.out.println("0-Estudiante");
-        System.out.println("1-Profesor");
-        System.out.println("Elija una opción:");
+        System.out.println("\t0-Estudiante");
+        System.out.println("\t1-Profesor");
+        System.out.print("\tElija una opción:");
     }
 
 

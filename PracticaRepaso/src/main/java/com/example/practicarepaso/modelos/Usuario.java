@@ -1,4 +1,4 @@
-package modelos;
+package com.example.practicarepaso.modelos;
 
 abstract public class Usuario {
 
@@ -50,7 +50,7 @@ abstract public class Usuario {
     }
 
     public String toString() {
-        return "ID: " + this.id + "\nNombre: " + this.nombre + "\nEmail: " + this.email;
+        return "ID: " + this.id + "\nNombre: " + this.nombre + "\nEmail: " + this.email+"\n";
     }
 
     @Override

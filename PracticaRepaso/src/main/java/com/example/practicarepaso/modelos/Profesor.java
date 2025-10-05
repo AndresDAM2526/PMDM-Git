@@ -1,6 +1,5 @@
-package modelos;
+package com.example.practicarepaso.modelos;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -52,11 +51,10 @@ public class Profesor extends Usuario{
         this.cargo = cargo;
     }
 
-    public double calcular_salario(LocalDate fecha){
+    public double calcular_salario_bruto(LocalDate fecha){
         double complementoCargo;
         double complementoAntiguedad;
         double salarioSinDeducciones;
-        double salarioFinal=0;
 
         int antiguedad=0;
         int trienos=0;
@@ -71,16 +69,15 @@ public class Profesor extends Usuario{
         antiguedad=aniosCompletos.getYears();
 
         trienos=antiguedad/3;
-
         complementoAntiguedad=complementoAntiguedad(this.getFecha_comienzo());
-
         salarioSinDeducciones=SALARIO_BASE+complementoCargo+complementoAntiguedad;
-
-        salarioFinal=salarioSinDeducciones*(1-this.irpf);
-        return salarioFinal;
-
-
+        return salarioSinDeducciones;
     }
+
+    public double calcular_salario_neto(double salarioBruto){
+        return salarioBruto*(1-(this.getIrpf()/100.0));
+    }
+
     public int complementoAntiguedad(LocalDate fecha_comienzo){
         int trienos;
         Period aniosCompletos=Period.between(fecha_comienzo,LocalDate.now());
@@ -89,37 +86,7 @@ public class Profesor extends Usuario{
         return 90*trienos;
     }
 
-    public void generarNomina(LocalDate fecha){
-        String nombreFichero=getID()+getNombre()+getFecha_comienzo();
-        File fichero=new File("src/main/resources/nominas");
-        try {
-            BufferedWriter bw=new BufferedWriter(new FileWriter(fichero));
-            bw.write("Nombre: "+getNombre()+"\t\tEspecialidad: "+getEspecialidad());
-            bw.write("Cargo: "+getCargo()+"\t\tAntigüedad: "+getFecha_comienzo());
-            bw.write("Mes: "+LocalDate.now().getMonth()+"  Año: "+LocalDate.now().getYear());
-            bw.write("CONCEPTO"+"\tImporte");
-            bw.write("--------------------------------------------------");
-            bw.write("Salario base"+"\t1500€");
-            if(getCargo().equals(Cargo.Director)){
-                bw.write("Complemento cargo: "+"\t500€");
-            } else if (getCargo().equals(Cargo.Secretario)) {
-                bw.write("Complemento cargo: "+"\t300€");
-            }
-            bw.write("Antigüedad: "+"\t"+complementoAntiguedad(this.fecha_comienzo));
-            bw.write("--------------------------------------------------");
-            bw.write("TOTAL(Bruto)"+"\t(Suma de los valores anteriores)");
-            bw.write("IRPF"+"\t"+getIrpf());
-            bw.write("TOTAL(Neto,a percibir"+"\t(Bruto *1-"+getIrpf()+")");
-            bw.close();
 
-
-
-        } catch (FileNotFoundException e){
-            System.out.println("Fichero no encontrado");
-        } catch (IOException e){
-            System.out.println("Error entrada/salida");
-        }
-    }
 
     @Override
     public String toString(){

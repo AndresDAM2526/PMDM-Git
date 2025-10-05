@@ -1,4 +1,4 @@
-package modelos;
+package com.example.practicarepaso.modelos;
 
 public enum Cargo {
 
