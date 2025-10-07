@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     simularConduccion(camion)
                 }
                 "Motocicleta"->{
-                    var moto= Motocicleta("2","34",2025,120,false)
+                    var moto= Motocicleta("2","34",2025,120,)
                     Toast.makeText(this,moto.arrancar().toString(), Toast.LENGTH_LONG).show()
                     Toast.makeText(this,moto.acelerar().toString(), Toast.LENGTH_LONG).show()
                     Toast.makeText(this,moto.detener().toString(), Toast.LENGTH_LONG).show()
