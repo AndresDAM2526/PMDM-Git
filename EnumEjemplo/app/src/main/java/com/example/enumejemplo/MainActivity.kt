@@ -78,5 +78,10 @@ class MainActivity : AppCompatActivity() {
         var listener= EscuchadorSpinner()
         miSpinner.onItemSelectedListener=listener
     }
+    class Clase1{
+        class Clase2{}
+    }
+
+    var miObtetoClase= Clase1.Clase2()
 }
 
