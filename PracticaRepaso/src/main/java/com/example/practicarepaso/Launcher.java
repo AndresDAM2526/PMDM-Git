@@ -33,7 +33,7 @@ public class Launcher extends Application{
                 menuPrincipal();
                 opcionUsuario=teclado.nextInt();
                 switch (opcionUsuario){
-                    case 1:
+                    case 1: //Dar de alta un usuario
                         int idUsuario;
                         String nombreUsuario;
                         String email;
@@ -43,7 +43,7 @@ public class Launcher extends Application{
                         tipoUsuarioMenu();
                         tipoUsuario=teclado.nextInt();
                         switch (tipoUsuario){
-                            case 0:
+                            case 0: //Estudiante
                                 System.out.print("Introduzca el ID del usuario:");
                                 idUsuario=teclado.nextInt();
                                 teclado.nextLine();
@@ -60,7 +60,7 @@ public class Launcher extends Application{
                                 Thread.sleep(500);
                                 System.out.println("Estudiante añadido correctamente");
                                 break;
-                            case 1:
+                            case 1: //Profesor
                                 String especialidad="";
                                 String fechaComienzo="";
                                 LocalDate fechaComienzoLd;
@@ -100,7 +100,7 @@ public class Launcher extends Application{
                                 break;
                         }
                         break;
-                    case 2:
+                    case 2://Mostrar usuarios
                         try {
                             ArrayList<Usuario> usuariosEncontrados=new ArrayList<>();
                             System.out.println("---Listar usuarios---");
@@ -123,7 +123,7 @@ public class Launcher extends Application{
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
                         break;
-                    case 3:
+                    case 3://Eliminar usuario
                         try {
                             System.out.println("---Eliminar usuario---");
                             System.out.println("Introduzca el ID del usuario que quiere eliminar");
@@ -134,7 +134,7 @@ public class Launcher extends Application{
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
                         break;
-                    case 4:
+                    case 4: //Establecer IRPF
                         try {
                             int irpfSalario;
                             System.out.println("---Configurar salario---");
@@ -150,7 +150,7 @@ public class Launcher extends Application{
                             System.out.println("Tipo de dato introducido incorrecto");
                         }
                         break;
-                    case 5:
+                    case 5: //Generar nomina
                         int idUsuarioNomina;
                         System.out.println("---Generar nómina---");
                         System.out.print("Introduzca el ID del usuario:");
@@ -165,10 +165,10 @@ public class Launcher extends Application{
                             break;
                         }
 
-                    case 6:
+                    case 6: //Mostrar interfaz gráfica
                         launch();
                         break;
-                    case 7:
+                    case 7: //Salir
                         System.out.println("Saliendo . . .");
                         break;
 

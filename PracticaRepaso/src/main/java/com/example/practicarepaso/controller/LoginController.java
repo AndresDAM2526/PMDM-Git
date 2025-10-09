@@ -20,6 +20,8 @@ public class LoginController {
     public void setGestorUsuarios(GestorUsuarios gestorUser){
         this.gestorUsuarios=gestorUser;
     }
+
+    //Función que comprueba si el usuario está en el ArrayList
     @FXML
     public void validar(Event event) {
         String email = tfEmail.getText();
@@ -46,6 +48,7 @@ public class LoginController {
 
     }
 
+    //Al pulsar Salir, se cierra la interfaz gráfica
     public void salir(Event event) {
         Stage cerrar = (Stage) tfEmail.getScene().getWindow();
         cerrar.close();

@@ -9,6 +9,7 @@ public class GestorUsuarios implements GestionUsuarios {
 
     public  ArrayList<Usuario> usuarios = new ArrayList<>();
 
+    //Se agrega un usuario a la lista, primero se comprueba si existe
     @Override
     public void agregarUsuario(Usuario usuario) {
         for (Usuario us : usuarios) {
@@ -18,7 +19,7 @@ public class GestorUsuarios implements GestionUsuarios {
         }
         usuarios.add(usuario);
     }
-
+    //Función para eliminar un usuario
     @Override
     public void eliminarUsuaios(int idUsuario) {
         boolean encontrado = false;
@@ -37,6 +38,7 @@ public class GestorUsuarios implements GestionUsuarios {
         }
     }
 
+    //Función para mostrar los usuarios en función del tipo
     @Override
     public ArrayList<Usuario> listarUsuario(int tipoUsuario) {
         ArrayList<Usuario> usuariosEncontrados = new ArrayList<>();
@@ -59,6 +61,7 @@ public class GestorUsuarios implements GestionUsuarios {
         return usuariosEncontrados;
     }
 
+    //Función para comprobar si existe un usuario
     public Usuario existeUsuario(int idUsuario) {
         for (Usuario us : usuarios) {
             if (us.getID() == idUsuario) {
@@ -68,6 +71,7 @@ public class GestorUsuarios implements GestionUsuarios {
         return null;
     }
 
+    //Función para generar la nómina
     public void generarNomina(LocalDate fecha, int idUsuario) {
         Profesor profesorEncontrado = (Profesor) existeUsuario(idUsuario);
         String nombreFichero = profesorEncontrado.getID() + "_" + profesorEncontrado.getNombre() + "_" + fecha;
@@ -102,6 +106,7 @@ public class GestorUsuarios implements GestionUsuarios {
         }
     }
 
+    //Función que se usa en la interfaz gráfica para comprobar si un usuario existe en el ArrayList
     public boolean validarUsuario(String email, String pass) {
         try {
             boolean datosCorrectos = false;
