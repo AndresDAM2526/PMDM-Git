@@ -184,13 +184,19 @@ public class Launcher extends Application{
 
 
     }
+
+
     public void start(Stage stage) throws IOException {
-       LoginController controller=new LoginController();
        FXMLLoader loader=new FXMLLoader();
        loader.setLocation(R.getUI("login.fxml"));
+
+       LoginController controller=new LoginController();
        loader.setController(controller);
        VBox vBox=loader.load();
-       controller.setGestionUsuarios(gestorUsuarios);
+
+
+       controller.setGestorUsuarios(gestorUsuarios);
+
        Scene scene=new Scene(vBox);
        stage.setScene(scene);
        stage.show();

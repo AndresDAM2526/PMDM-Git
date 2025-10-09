@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 
 public class GestorUsuarios implements GestionUsuarios {
 
-    public ArrayList<Usuario> usuarios = new ArrayList<>();
+    public  ArrayList<Usuario> usuarios = new ArrayList<>();
 
     @Override
     public void agregarUsuario(Usuario usuario) {

@@ -16,13 +16,12 @@ public class LoginController {
     public Button btValidar;
     public Button btSalir;
 
-    private GestionUsuarios gestionUsuarios;
-    public void setGestionUsuarios(GestionUsuarios gestionUsuarios){
-        this.gestionUsuarios=gestionUsuarios;
+    private GestorUsuarios gestorUsuarios;
+    public void setGestorUsuarios(GestorUsuarios gestorUser){
+        this.gestorUsuarios=gestorUser;
     }
     @FXML
     public void validar(Event event) {
-        GestorUsuarios gestorUsuarios = new GestorUsuarios();
         String email = tfEmail.getText();
         String pass = tfPass.getText();
         if (email.isEmpty() || pass.isEmpty()) {
