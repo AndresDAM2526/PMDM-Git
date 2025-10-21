@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Password"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <TextView
+        android:id="@+id/tvFechNac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Fecha Nacimiento"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <TextView
+        android:id="@+id/tvTipoUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:text="Tipo de usuario"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <TextView
+        android:id="@+id/tvDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:text="Descripcion"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:hint="Introduzca el usuario"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLogin"
+        app:layout_constraintStart_toEndOf="@+id/tvLogin"
+        app:layout_constraintTop_toTopOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/etDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Descripcion"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDescripcion"
+        app:layout_constraintStart_toEndOf="@+id/tvDescripcion"
+        app:layout_constraintTop_toTopOf="@+id/tvDescripcion" />
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.148" />
+
+    <EditText
+        android:id="@+id/editTextText8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPass"
+        app:layout_constraintStart_toEndOf="@+id/tvPass"
+        app:layout_constraintTop_toTopOf="@+id/tvPass" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:text="Email"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/editTextText11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Email"
+        app:layout_constraintBottom_toBottomOf="@+id/tvEmail"
+        app:layout_constraintStart_toEndOf="@+id/tvEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvEmail" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTipoUsuario"
+        app:layout_constraintStart_toEndOf="@+id/tvTipoUsuario"
+        app:layout_constraintTop_toTopOf="@+id/tvTipoUsuario" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
