@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:ems="10"
+        android:hint="Descripcion"
         android:inputType="text"
-        android:text="Descripcion"
         app:layout_constraintBottom_toBottomOf="@+id/tvDescripcion"
         app:layout_constraintStart_toEndOf="@+id/tvDescripcion"
         app:layout_constraintTop_toTopOf="@+id/tvDescripcion" />
@@ -83,7 +83,7 @@
         app:layout_constraintVertical_bias="0.148" />
 
     <EditText
-        android:id="@+id/editTextText8"
+        android:id="@+id/etPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
     <EditText
-        android:id="@+id/editTextText11"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -124,5 +124,61 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvTipoUsuario"
         app:layout_constraintStart_toEndOf="@+id/tvTipoUsuario"
         app:layout_constraintTop_toTopOf="@+id/tvTipoUsuario" />
+
+    <Button
+        android:id="@+id/btGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.901" />
+
+    <TextView
+        android:id="@+id/tvMembresia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="375dp"
+        android:text="Membresía"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/etMembresia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:hint="Membresía"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMembresia"
+        app:layout_constraintStart_toEndOf="@+id/tvMembresia"
+        app:layout_constraintTop_toTopOf="@+id/tvMembresia" />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="430dp"
+        android:text="Area"
+        app:layout_constraintStart_toStartOf="@+id/tvLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/etArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:hint="Area"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/tvArea"
+        app:layout_constraintStart_toEndOf="@+id/tvLogin"
+        app:layout_constraintTop_toTopOf="@+id/tvArea" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
