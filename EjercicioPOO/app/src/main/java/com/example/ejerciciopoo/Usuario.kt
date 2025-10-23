@@ -25,7 +25,5 @@ open class Usuario( login: String, var password:String, fechaNac: LocalDate?=nul
             return !nacimiento.after(hoy)
         }*/
 
-    open fun obtenerDescripcion():String{
-        return "Login->${this.login}"+"\nEmail->${this.email}"
-    }
+    open fun obtenerDescripcion()= "Login->${login}"+"\nEmail->${email}"
     }

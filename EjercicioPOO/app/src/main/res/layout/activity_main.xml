@@ -24,6 +24,7 @@
         android:layout_marginTop="100dp"
         android:text="Fecha Nacimiento"
         app:layout_constraintEnd_toEndOf="@+id/tvLogin"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/tvLogin"
         app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
@@ -155,7 +156,6 @@
         android:ems="10"
         android:hint="Membresía"
         android:inputType="text"
-        android:text="Name"
         app:layout_constraintBottom_toBottomOf="@+id/tvMembresia"
         app:layout_constraintStart_toEndOf="@+id/tvMembresia"
         app:layout_constraintTop_toTopOf="@+id/tvMembresia" />
@@ -180,5 +180,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvArea"
         app:layout_constraintStart_toEndOf="@+id/tvLogin"
         app:layout_constraintTop_toTopOf="@+id/tvArea" />
+
+    <EditText
+        android:id="@+id/etFechaNac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:ems="10"
+        android:hint="Fecha de nacimiento"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFechNac"
+        app:layout_constraintStart_toEndOf="@+id/tvFechNac"
+        app:layout_constraintTop_toTopOf="@+id/tvFechNac" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

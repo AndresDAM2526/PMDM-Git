@@ -1,9 +1,10 @@
 package com.example.ejerciciopoo
 
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -14,9 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.get
 import com.example.ejerciciopoo.databinding.ActivityMainBinding
-import org.w3c.dom.Text
 import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
@@ -36,9 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvArea: TextView
 
+    private lateinit var tvFecha: TextView
+
     private lateinit var etLogin: EditText
     private lateinit var etPass: EditText
     private lateinit var etEmail: EditText
+    private lateinit var etFechaNac: EditText
     private lateinit var etDescripcion: EditText
 
     private lateinit var etMembresia: EditText
@@ -66,6 +68,10 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun iniciarlizarComponentes(){
+        //Cambiar a
+        // miBinding.btGuardar...
+        this.etFechaNac=findViewById<EditText>(R.id.etFechaNac)
+        this.tvFechNac=findViewById<TextView>(R.id.tvFechNac)
         this.btGuardar=findViewById<Button>(R.id.btGuardar)
         this.tvLogin=findViewById<TextView>(R.id.tvLogin)
         this.etLogin=findViewById<EditText>(R.id.etLogin)
@@ -92,8 +98,8 @@ class MainActivity : AppCompatActivity() {
 
         var adaptador= ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,tipoUsuario)
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        this.spinner.adapter=adaptador
-
+        miBinding.spinner.adapter=adaptador
+        /* No es necesario porque no desencadeno ninguna acción, simplemento quiero acceder al valor que ha seleccionado el usaurio
         this.spinner.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-        }
+        }*/
 
         this.btGuardar.setOnClickListener {
             var login:String=this.etLogin.text.toString()
@@ -139,5 +145,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     
 }
