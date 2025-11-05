@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <CheckBox
+        android:id="@+id/cbLunes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lunes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.109" />
+
+    <CheckBox
+        android:id="@+id/cbMartes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Martes"
+        app:layout_constraintEnd_toEndOf="@+id/cbLunes"
+        app:layout_constraintStart_toStartOf="@+id/cbLunes"
+        app:layout_constraintTop_toBottomOf="@+id/cbLunes" />
+
+    <CheckBox
+        android:id="@+id/cbOpcion3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Miercoles"
+        app:layout_constraintEnd_toEndOf="@+id/cbMartes"
+        app:layout_constraintStart_toStartOf="@+id/cbMartes"
+        app:layout_constraintTop_toBottomOf="@+id/cbMartes" />
+
+    <CheckBox
+        android:id="@+id/cbMiercoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Miercoles"
+        app:layout_constraintEnd_toEndOf="@+id/cbMartes"
+        app:layout_constraintStart_toStartOf="@+id/cbMartes"
+        app:layout_constraintTop_toBottomOf="@+id/cbMartes" />
+
+    <TextView
+        android:id="@+id/tvOpcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.769" />
+
+    <Button
+        android:id="@+id/btEnviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
+
+    <CheckBox
+        android:id="@+id/cbJueves"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Jueves"
+        app:layout_constraintStart_toStartOf="@+id/cbOpcion3"
+        app:layout_constraintTop_toBottomOf="@+id/cbOpcion3" />
+
+    <CheckBox
+        android:id="@+id/cbViernes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Viernes"
+        app:layout_constraintEnd_toEndOf="@+id/cbJueves"
+        app:layout_constraintStart_toStartOf="@+id/cbJueves"
+        app:layout_constraintTop_toBottomOf="@+id/cbJueves" />
+
+    <CheckBox
+        android:id="@+id/cbSabado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Sábado"
+        app:layout_constraintEnd_toEndOf="@+id/cbViernes"
+        app:layout_constraintStart_toStartOf="@+id/cbViernes"
+        app:layout_constraintTop_toBottomOf="@+id/cbViernes" />
+
+    <CheckBox
+        android:id="@+id/cbDomingo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Domingo"
+        app:layout_constraintEnd_toEndOf="@+id/cbSabado"
+        app:layout_constraintStart_toStartOf="@+id/cbSabado"
+        app:layout_constraintTop_toBottomOf="@+id/cbSabado" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
