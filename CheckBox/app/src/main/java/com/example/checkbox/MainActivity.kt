@@ -53,20 +53,21 @@ class MainActivity : AppCompatActivity() {
         this.btEnviar = findViewById<Button>(R.id.btEnviar)
 
         btEnviar.setOnClickListener {
+            tvOpcion.setText("")
             if (cbLunes.isChecked) {
-                tvOpcion.setText("Lunes")
+                tvOpcion.setText("${tvOpcion.text} ${cbLunes.text}")
             } else if (cbMartes.isChecked) {
-                tvOpcion.setText("Martes")
+                tvOpcion.setText("${tvOpcion.text} ${cbMartes.text}")
             } else if (cbMiercoles.isChecked) {
-                tvOpcion.setText("Miercoles")
+                tvOpcion.setText("${tvOpcion.text} ${cbMiercoles.text}")
             } else if (cbJueves.isChecked) {
-                tvOpcion.setText("Jueves")
+                tvOpcion.setText("${tvOpcion.text} ${cbJueves.text}")
             } else if (cbViernes.isChecked) {
-                tvOpcion.setText("Viernes")
+                tvOpcion.setText("${tvOpcion.text} ${cbViernes.text}")
             } else if (cbSabado.isChecked) {
-                tvOpcion.setText("Sabado")
+                tvOpcion.setText("${tvOpcion.text} ${cbSabado.text}")
             } else {
-                tvOpcion.setText("Domingo")
+                tvOpcion.setText("${tvOpcion.text} ${cbDomingo.text}")
             }
         }
 
