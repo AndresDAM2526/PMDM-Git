@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a695e704-04a0-4ee0-b2d2-b0487fb08688" name="Changes" comment="Ordenando carpetas" />
+    <list default="true" id="a695e704-04a0-4ee0-b2d2-b0487fb08688" name="Changes" comment="Ordenando carpetas">
+      <change afterPath="$PROJECT_DIR$/../EjemploPOO2/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cuestionario/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Cuestionario/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EjemploPOO/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../EjemploPOO/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ejercicio2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ejercicio2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prueba/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prueba/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Recurso_Drawable-master/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Recurso_Drawable-master/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RepasoExamen/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RepasoExamen/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../a/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../a/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../a/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../a/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../a/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +27,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\williaman.corgar\.android\avd\Pixel_9_Pro.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -42,19 +56,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;InicioKotlin&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/williaman.corgar/Documents/PMDM/PMDM-Git/Ejercicios2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "InicioKotlin",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/williaman.corgar/Documents/GIT/PMDM-Git/Ejercicios2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Ejercicios.app" />

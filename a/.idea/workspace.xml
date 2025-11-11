@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa484639-48f3-4b06-8105-272e98bf1468" name="Changes" comment="" />
+    <list default="true" id="aa484639-48f3-4b06-8105-272e98bf1468" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../EjemploPOO2/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cuestionario/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Cuestionario/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EjemploPOO/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../EjemploPOO/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ejercicio2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ejercicio2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prueba/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prueba/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PruebaFuncionOrdenSuperior/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Recurso_Drawable-master/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Recurso_Drawable-master/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RepasoExamen/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RepasoExamen/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +24,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\williaman.corgar\.android\avd\Medium_Phone.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -28,12 +39,12 @@
     &quot;assignee&quot;: &quot;AndresDAM2526&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AndresDAM2526/PMDM-Git.git",
-    "accountId": "28e722d9-71eb-476f-9f8f-ef6b5fdc41d7"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AndresDAM2526/PMDM-Git.git&quot;,
+    &quot;accountId&quot;: &quot;28e722d9-71eb-476f-9f8f-ef6b5fdc41d7&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -49,11 +60,12 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "android.gradle.sync.needed": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "InicioKotlin",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/andre/Documents/DAM/Presencial/Modulos/PMDM/PMDM-Git/a"
+    "last_opened_file_path": "C:/Users/williaman.corgar/Documents/GIT/PMDM-Git/a"
   }
 }]]></component>
   <component name="RunManager">
