@@ -1,16 +1,19 @@
 package com.example.examenprimerparcialandrescorreagarcia
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.examenprimerparcialandrescorreagarcia.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var miBinding: ActivityMainBinding
@@ -18,7 +21,8 @@ class MainActivity : AppCompatActivity() {
     //Defino un mutableList de Lista_compra para poder almacenar
     //todas las listas de la compra
     val mis_listas_compra = mutableListOf<Lista_Compra>()
-    val mi_lista_compra_actual: Lista_Compra?= null
+    var mi_lista_compra_actual: Lista_Compra? = null
+    var indice_producto = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         miBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -59,6 +63,7 @@ class MainActivity : AppCompatActivity() {
          */
     }
 
+    @SuppressLint("SetTextI18n")
     private fun inicializarComponentes() {
         //DatePickerDialog
         //Cuando se pulse encima del campo de fecha de compra debe desplegarse el DatePickerDialong
@@ -72,6 +77,25 @@ class MainActivity : AppCompatActivity() {
                 { vista, dia, mes, anio ->
                     miBinding.etFechaCompra.setText("$dia-${mes + 1}-$anio")
                     //Aqui voy a gestionar si existe una lista de la compra con la fecha selecionada
+                    var fecha_compra = SimpleDateFormat("dd-MM-yyyy").parse("$dia-${mes + 1}-$anio")
+                    mi_lista_compra_actual = mis_listas_compra.find { it.fecha == fecha_compra }
+                    if (mi_lista_compra_actual != null) {
+                        //Existe una lista de la compra con esa fecha
+                        val builder = AlertDialog.Builder(this)
+                        builder.run {
+                            setMessage("Ya hay una lista de la compra con esa fecha")
+                            setTitle("LISTA COMPRA")
+                            setPositiveButton("Aeptar") { _, _ ->
+                            }
+                            create().show()
+                        }
+                    } else {
+                        //No existe la lista de la compra,la creo
+                        //Instancio la nueva lista de la compra
+                        mi_lista_compra_actual = Lista_Compra(fecha_compra)
+                        //la añado a las listas
+                        mis_listas_compra.add(mi_lista_compra_actual!!)
+                    }
 
                 },
                 calendario.get(Calendar.YEAR),
@@ -80,6 +104,37 @@ class MainActivity : AppCompatActivity() {
             )
             //Muestro el DatePickerDialog
             miDatePicker.show()
+            //Calculamos el importe y lo mostramos
+            miBinding.tvImporte.text = "IMPORTE TOTAL ${mi_lista_compra_actual!!.calcularTotal()}"
+            //Habilito el botón avanzar si hay más productos
+            miBinding.btAvanzar.isEnabled =
+                (mi_lista_compra_actual!!.obtener_productos_cesta().size > 1)
+            //Si existe un producto en esa lista de la compra muestro el producto
+            if (mi_lista_compra_actual!!.obtener_productos_cesta().size >= 1) {
+                val producto_cesta = mi_lista_compra_actual!!.obtener_productos_cesta().get(0)
+                miBinding.spinnerTipoProducto.setSelection(producto_cesta.tipo.ordinal)
+                miBinding.etNombreProducto.setText(producto_cesta.nombre)
+                miBinding.etImporte.setText(producto_cesta.precio.toString())
+            }
+            //Defino el código al pulsar el botón añadir
+            miBinding.btAnadirProducto.setOnClickListener {
+                //Añadir el producto a la lista de la compra actual
+                //Creo un producto
+                var miProducto = Producto_cesta(
+                    miBinding.etNombreProducto.text.toString(),
+                    miBinding.spinnerTipoProducto.selectedItem as TipoProducto,
+                    miBinding.etImporte.text.toString().toDouble()
+                )
+                mi_lista_compra_actual?.let {
+                    it.Agregar_Producto(miProducto)
+                }
+                //Vacio los campos de texto
+                miBinding.etNombreProducto.setText("")
+                miBinding.etImporte.setText("")
+                //Recalculo el importe total
+                miBinding.tvImporte.text =
+                    "IMPORTE TOTAL ${mi_lista_compra_actual!!.calcularTotal()}"
+            }
         }
 
 
@@ -103,6 +158,62 @@ class MainActivity : AppCompatActivity() {
                 habilitar_botones(false)
             }
         }
+        miBinding.btAvanzar.setOnClickListener {
+            //Si no estoy en el final de la lista de productos de esa lista de la compra
+            if (indice_producto <= mi_lista_compra_actual!!.obtener_productos_cesta().size) {
+                //Muestro los datos de ese producto
+                var producto = mi_lista_compra_actual?.let {
+                    it.obtener_productos_cesta().get(indice_producto)
+                }
+                miBinding.etNombreProducto.setText(producto?.nombre)
+                miBinding.etImporte.setText(producto?.precio.toString())
+                miBinding.spinnerTipoProducto.setSelection(producto?.tipo?.ordinal ?: 0)
+                indice_producto++
+                //Habilito el botón de retroceso
+                miBinding.btRetroceder.isEnabled = indice_producto > 0
+            } else {
+                //Deshabilitar el botón
+                it.isEnabled = false
+            }
+        }
+
+        miBinding.btRetroceder.setOnClickListener {
+            //Si no estoy al principio de la lista de productos de la lista de productos actual
+            if (indice_producto > 0) {
+                var producto = mi_lista_compra_actual?.let {
+                    it.obtener_productos_cesta().get(indice_producto)
+                }
+                miBinding.etNombreProducto.setText(producto?.nombre)
+                miBinding.etImporte.setText(producto?.precio.toString())
+                miBinding.spinnerTipoProducto.setSelection(producto?.tipo?.ordinal ?: 0)
+                indice_producto--
+            } else {
+                it.isEnabled = false
+            }
+        }
+
+        miBinding.switchTipoProducto.setOnClickListener {
+            var lista_productos: MutableList<Producto_cesta>?
+            lista_productos=null
+            //Solo filtraré si hay productos que filtrar
+            if (mi_lista_compra_actual!!.obtener_productos_cesta().size > 1) {
+                if (it.isActivated) {
+                    //Filtrar los productos
+                    lista_productos = mi_lista_compra_actual?.let {
+                        it.filtrar_productos { it.tipo == miBinding.spinnerTipoProducto.selectedItem } as MutableList
+                    }
+                }
+
+                //Actualizo el importe total de la lista de productos
+                var importe = lista_productos?.let {
+                    it.sumOf { it.precio }
+                }
+                miBinding.tvImporte.text =
+                    "IMPORTE TOTAL ${mi_lista_compra_actual!!.calcularTotal()}"
+            }
+
+        }
+
     }
 
     fun habilitar_botones(estado: Boolean) {
