@@ -14,7 +14,8 @@ class MainActivityxml : AppCompatActivity() {
     var contador=0
     lateinit var etiqueta: TextView
     lateinit var boton: Button
-    private val miviewModel: MiViewModel by viewModels()
+    private val miviewModel: MiViewModel by viewModels() //by delega a alguien que haga algo, de esta manera, aunque se destruya la actividad, los datos persisten
+    //private val miviewModel: MiViewModel=miViewModel si lo hago de esta manera, cuando se destruey la actividad se pierden los datos que almacena
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,7 +52,7 @@ class MainActivityxml : AppCompatActivity() {
 
     private fun conviewmodel() {
        //Defino un observador, de tal forma cuando cambia el valor de count
-        miviewModel.count.observe(this){
+        miviewModel.count.observe(this){ //lo que se ejecuta cuando se detecta un cambio en la variable 
             etiqueta.text="Contador:${it}"
         }
 
