@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -45,8 +46,12 @@ class Blackjack : AppCompatActivity() {
         var listaCartasCrupier: MutableList<String> = mutableListOf()
         var contadorUsuario: Int = 0
         var contadorCrupier: Int = 0
+        var finPartida: Boolean = false
+        var cartaGeneradaUsuario: String
+        var cartaGeneradaCrupier: String
         miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
         miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+        miBindingBlackjack.btVolverAJugar.visibility = View.INVISIBLE
         miBindingBlackjack.layoutCrupier.visibility = View.INVISIBLE
         miBindingBlackjack.layoutUsuario.visibility = View.INVISIBLE
         miBindingBlackjack.btBlackJackIniciar.setOnClickListener {
@@ -56,22 +61,84 @@ class Blackjack : AppCompatActivity() {
             miBindingBlackjack.layoutCrupier.visibility = View.VISIBLE
             miBindingBlackjack.layoutUsuario.visibility = View.VISIBLE
             for (i in 1..2) {
-                var cartaGeneradaUsuario: String
-                var cartaGeneradaCrupier: String
                 cartaGeneradaUsuario = generarCarta()
+                contadorUsuario += obtenerValorCarta(cartaGeneradaUsuario)
                 listaCartasUsuario.add(cartaGeneradaUsuario)
-                contadorUsuario += obtenerValorCarta(generarCarta())
                 cartaGeneradaCrupier = generarCarta()
-                listaCartasCrupier.add(cartaGeneradaCrupier)
                 contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-                miBindingBlackjack.tvPuntuacionCrupier.text=contadorCrupier.toString()
-                miBindingBlackjack.tvPuntuacionUsuario.text=contadorUsuario.toString()
+                listaCartasCrupier.add(cartaGeneradaCrupier)
+                Log.i("INFO", "${obtenerValorCarta(cartaGeneradaUsuario)}")
+                miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
+                miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
 
             }
-            miBindingBlackjack.tvCartasC.text = listaCartasCrupier.toString()
+            miBindingBlackjack.tvCartasC.text = listaCartasCrupier[0]
             miBindingBlackjack.tvCartasU.text = listaCartasUsuario.toString()
 
+        }
 
+        miBindingBlackjack.btPedirCarta.setOnClickListener {
+            while (!finPartida) {
+                cartaGeneradaUsuario = generarCarta()
+                if (cartaGeneradaUsuario.equals("AS") && (contadorUsuario + obtenerValorCarta(
+                        cartaGeneradaUsuario
+                    ) > 21)
+                ) {
+                    contadorUsuario += 1
+                } else {
+                    contadorUsuario += obtenerValorCarta(cartaGeneradaUsuario)
+                }
+
+                listaCartasUsuario.add(cartaGeneradaUsuario)
+                miBindingBlackjack.tvCartasU.text = listaCartasUsuario.toString()
+                miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
+                if (contadorUsuario > 21) {
+                    while (contadorCrupier < 21) {
+                        cartaGeneradaCrupier = generarCarta()
+                        if (cartaGeneradaCrupier.equals("AS") && (contadorCrupier + obtenerValorCarta(
+                                cartaGeneradaCrupier
+                            ) > 21)
+                        ) contadorCrupier += 1
+                        else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+                        listaCartasCrupier.add(cartaGeneradaCrupier)
+                        miBindingBlackjack.tvCartasC.text = listaCartasCrupier.toString()
+                        miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
+                    }
+                    finPartida = true
+                    break
+                } else if (contadorUsuario == 21) {
+                    Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
+                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                    finPartida = true
+                    break
+                } else {
+                    /*
+
+                    if (contadorCrupier > 21) {
+                        Toast.makeText(this, "Se ha pasado el crupier", Toast.LENGTH_LONG).show()
+                        miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                        miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                        miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                        finPartida = true
+                        break
+                    } else if (contadorCrupier == 21) {
+                        Toast.makeText(this, "Ganó el crupier", Toast.LENGTH_LONG).show()
+                        miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                        miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                        miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                        finPartida = true
+                        break
+                    } else {
+
+                    }
+
+
+                     */
+
+                }
+            }
         }
 
 
