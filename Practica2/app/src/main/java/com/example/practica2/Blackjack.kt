@@ -113,30 +113,33 @@ class Blackjack : AppCompatActivity() {
                     miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
                     finPartida = true
                     break
-                } else {
-                    /*
+                }
+            }
+        }
 
-                    if (contadorCrupier > 21) {
-                        Toast.makeText(this, "Se ha pasado el crupier", Toast.LENGTH_LONG).show()
-                        miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-                        miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                        miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-                        finPartida = true
-                        break
-                    } else if (contadorCrupier == 21) {
-                        Toast.makeText(this, "Ganó el crupier", Toast.LENGTH_LONG).show()
-                        miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-                        miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                        miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-                        finPartida = true
-                        break
-                    } else {
-
-                    }
-
-
-                     */
-
+        miBindingBlackjack.btPlantarse.setOnClickListener {
+            while (contadorCrupier < 21) {
+                cartaGeneradaCrupier = generarCarta()
+                if (cartaGeneradaCrupier.equals("AS") && (contadorCrupier + obtenerValorCarta(
+                        cartaGeneradaCrupier
+                    ) > 21)
+                ) contadorCrupier += 1
+                else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+                listaCartasCrupier.add(cartaGeneradaCrupier)
+                miBindingBlackjack.tvCartasC.text = listaCartasCrupier.toString()
+                miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
+                if (contadorCrupier == 21) {
+                    Toast.makeText(this, "Ganó el crupier", Toast.LENGTH_LONG).show()
+                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                    break
+                } else if (contadorCrupier > 21) {
+                    Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
+                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                    break
                 }
             }
         }
