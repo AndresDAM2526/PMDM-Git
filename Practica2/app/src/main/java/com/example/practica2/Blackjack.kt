@@ -17,6 +17,10 @@ import com.example.practica2.databinding.ActivityBlackjackBinding
 import kotlin.random.Random
 
 class Blackjack : AppCompatActivity() {
+    var contadorUsuario: Int = 0
+    var contadorCrupier: Int = 0
+    var cartaGeneradaUsuario: String = ""
+    var cartaGeneradaCrupier: String = ""
     private lateinit var miBindingBlackjack: ActivityBlackjackBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         miBindingBlackjack = ActivityBlackjackBinding.inflate(layoutInflater)
@@ -36,13 +40,7 @@ class Blackjack : AppCompatActivity() {
     }
 
     fun iniciarJuego() {
-        var listaCartasUsuario: MutableList<String> = mutableListOf()
-        var listaCartasCrupier: MutableList<String> = mutableListOf()
-        var contadorUsuario: Int = 0
-        var contadorCrupier: Int = 0
-        var finPartida: Boolean = false
-        var cartaGeneradaUsuario: String
-        var cartaGeneradaCrupier: String
+
         miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
         miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
 
@@ -55,19 +53,21 @@ class Blackjack : AppCompatActivity() {
                 cartaGeneradaUsuario = generarCarta()
                 anadirCartaUsuario(obtenerIndice(cartaGeneradaUsuario))
                 contadorUsuario += obtenerValorCarta(cartaGeneradaUsuario)
-                listaCartasUsuario.add(cartaGeneradaUsuario)
             }
             miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
-            cartaGeneradaCrupier = generarCarta()
-            anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
-            contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-            listaCartasCrupier.add(cartaGeneradaCrupier)
+            if (contadorUsuario == 21) {
+                Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
+                miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+            }
             cartaGeneradaCrupier = generarCarta()
             anadirCartaCrupier(13)
             contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-            listaCartasCrupier.add(cartaGeneradaCrupier)
-            miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
+            cartaGeneradaCrupier = generarCarta()
+            anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
+            contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
 
+            //Si el crupier tiene as y 10, gana directamente--Comprobarlo
 
         }
 
@@ -94,14 +94,19 @@ class Blackjack : AppCompatActivity() {
                         ) > 21)
                     ) contadorCrupier += 1
                     else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-                    listaCartasCrupier.add(cartaGeneradaCrupier)
+
 
                 }
+                Toast.makeText(this, "Perdiste", Toast.LENGTH_LONG).show()
+                miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                miBindingBlackjack.btVolverAJugar.visibility=View.VISIBLE
 
             } else if (contadorUsuario == 21) {
                 Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
                 miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                 miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                miBindingBlackjack.btVolverAJugar.visibility=View.VISIBLE
 
 
             }
@@ -116,31 +121,33 @@ class Blackjack : AppCompatActivity() {
                     ) > 21)
                 ) contadorCrupier += 1
                 else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-                listaCartasCrupier.add(cartaGeneradaCrupier)
 
+                miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
                 if (contadorCrupier == 21) {
                     Toast.makeText(this, "Ganó el crupier", Toast.LENGTH_LONG).show()
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                    miBindingBlackjack.btVolverAJugar.visibility=View.VISIBLE
 
                     break
                 } else if (contadorCrupier > 21) {
                     Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-
                     break
                 }
-                if(21-contadorUsuario<21-contadorCrupier){
+                if (21 - contadorUsuario < 21 - contadorCrupier) {
                     Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show()
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                }else{
+
+                } else {
                     Toast.makeText(this, "Perdiste", Toast.LENGTH_LONG).show()
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                 }
             }
+            miBindingBlackjack.btVolverAJugar.visibility=View.VISIBLE
         }
 
         miBindingBlackjack.btSalir.setOnClickListener {
@@ -148,6 +155,7 @@ class Blackjack : AppCompatActivity() {
             startActivity(pantallaPrincipal)
             finish()
         }
+        miBindingBlackjack.btVolverAJugar.setOnClickListener { reiniciarJuego() }
 
 
         /*
@@ -174,6 +182,24 @@ class Blackjack : AppCompatActivity() {
         toast.show()
 
          */
+
+    }
+
+    fun reiniciarJuego() {
+        miBindingBlackjack.flCartasUsuario.removeAllViews()
+        miBindingBlackjack.flCartasCrupier.removeAllViews()
+        contadorCrupier = 0
+        contadorUsuario = 0
+        cartaGeneradaCrupier = ""
+        cartaGeneradaUsuario = ""
+        miBindingBlackjack.tvCartasCrupier.visibility = View.INVISIBLE
+        miBindingBlackjack.tvTusCartas.visibility = View.INVISIBLE
+        miBindingBlackjack.flCartasCrupier.visibility = View.INVISIBLE
+        miBindingBlackjack.flCartasUsuario.visibility = View.INVISIBLE
+        miBindingBlackjack.tvPuntuacionUsuario.visibility = View.INVISIBLE
+        miBindingBlackjack.tvPuntuacionCrupier.visibility = View.INVISIBLE
+        miBindingBlackjack.btJugar.visibility=View.VISIBLE
+
 
     }
 

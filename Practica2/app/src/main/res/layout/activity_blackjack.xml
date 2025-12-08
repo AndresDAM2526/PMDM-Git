@@ -65,9 +65,9 @@
 
             <FrameLayout
                 android:id="@+id/flCartasCrupier"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp" >
+                android:layout_margin="25dp">
 
             </FrameLayout>
 
@@ -81,8 +81,14 @@
                 android:id="@+id/btJugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
                 android:text="Jugar" />
+
+            <Button
+                android:id="@+id/btVolverAJugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volver a jugar"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvTusCartas"
