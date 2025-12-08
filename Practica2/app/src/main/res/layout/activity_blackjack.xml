@@ -18,117 +18,117 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btBlackJackIniciar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Juego"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarBlackJack"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <Button
-        android:id="@+id/btVolverAJugar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Volver a jugar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarBlackJack"
-        app:layout_constraintVertical_bias="0.499"
-        tools:visibility="visible" />
-
     <LinearLayout
-        android:id="@+id/layoutCrupier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:id="@+id/linearLayoutPrincipal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarBlackJack"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/tvCartasCrupier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:text="Cartas del crupier"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/tvCartasC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cartas" />
-
-        <TextView
-            android:id="@+id/tvPuntuacionCrupier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="375dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/btPedirCarta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="18dp"
-            android:layout_weight="1"
-            android:text="Pedir carta" />
-
-        <Button
-            android:id="@+id/btPlantarse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Plantarse" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBlackJack">
 
-        <TextView
-            android:id="@+id/tvCartasUsuario"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tus cartas"
-            android:textSize="24sp" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvCartasU"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Cartas" />
+            <Button
+                android:id="@+id/btSalir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="120dp"
+                android:layout_weight="1"
+                android:text="Salir" />
 
-        <TextView
-            android:id="@+id/tvPuntuacionUsuario"
+            <TextView
+                android:id="@+id/tvSaldo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCartasCrupier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Cartas del crupier"
+                android:textAlignment="center" />
+
+            <FrameLayout
+                android:id="@+id/flCartasCrupier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp" >
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvPuntuacionCrupier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/btJugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Jugar" />
+
+            <TextView
+                android:id="@+id/tvTusCartas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Tus cartas"
+                android:textAlignment="center" />
+
+            <FrameLayout
+                android:id="@+id/flCartasUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp">
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvPuntuacionUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btPedirCarta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Pedir carta" />
+
+                <Button
+                    android:id="@+id/btPlantarse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Plantarse" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

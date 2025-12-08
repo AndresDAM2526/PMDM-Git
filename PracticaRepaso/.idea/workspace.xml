@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="988e8bcb-9984-44a3-9d64-7445a268cb8c" name="Changes" comment="" />
+    <list default="true" id="988e8bcb-9984-44a3-9d64-7445a268cb8c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Practica2/app/src/main/java/com/example/practica2/Ahorcado.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Practica2/app/src/main/java/com/example/practica2/Ahorcado.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -27,12 +32,12 @@
     &quot;assignee&quot;: &quot;AndresDAM2526&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/AndresDAM2526/PMDM-Git.git&quot;,
-    &quot;accountId&quot;: &quot;aa153d69-b2f8-46a5-8a98-e927cd1dd6c6&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AndresDAM2526/PMDM-Git.git",
+    "accountId": "6bb83586-d0c1-44e2-97a4-9403920e0b6a"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -45,11 +50,15 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "RepasoJava",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "InicioKotlin",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/andre/Documents/DAM/Presencial/Modulos/PMDM/PMDM-Git/PracticaRepaso",
+    "last_opened_file_path": "C:/Users/andre/Documents/DAM/GIT/PMDM-Git/PracticaRepaso",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

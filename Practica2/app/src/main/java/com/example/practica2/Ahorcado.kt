@@ -1,7 +1,10 @@
 package com.example.practica2
 
+import android.content.Intent
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,11 +13,18 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.practica2.databinding.ActivityAhorcadoBinding
 
 class Ahorcado : AppCompatActivity() {
+    var numPalabra = 0
+    var intentos = 5
+    var intentosUsuario = 0
+    lateinit var imagenesAhorcado: TypedArray
+    var imagenActual = 0
     private lateinit var miBindingAhorcado: ActivityAhorcadoBinding
-    var palabra: String="Ordenador"
-    //private var palabras: List<String> = listOf("Ordenador","Palabra")
+    var palabras: List<String> = listOf("ORDENADOR", "RATON", "VEHICULO", "VENTANA", "BARCO")
+    var palabraOculta: MutableList<Char> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         miBindingAhorcado = ActivityAhorcadoBinding.inflate(layoutInflater)
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(miBindingAhorcado.root)
@@ -25,24 +35,109 @@ class Ahorcado : AppCompatActivity() {
         }
         val toolbar: Toolbar = miBindingAhorcado.toolbarAhorcado
         toolbar.setTitle("Ahorcado")
+        imagenesAhorcado = resources.obtainTypedArray(R.array.imagenesAhorcado)
         iniciarJuego()
     }
 
     fun iniciarJuego() {
+
         miBindingAhorcado.btJugar.setOnClickListener {
+            imagenActual = 0
+            intentosUsuario = 0
+            intentos = 5
+            palabraOculta = palabras[numPalabra].map { '_' }.toMutableList()
+            miBindingAhorcado.ivImagenesAhorcado.visibility = View.VISIBLE
+            miBindingAhorcado.tvIntentos.visibility = View.VISIBLE
             miBindingAhorcado.etLetra.visibility = View.VISIBLE
             miBindingAhorcado.tvPalabraEscondida.visibility = View.VISIBLE
             miBindingAhorcado.btComprobar.visibility = View.VISIBLE
             miBindingAhorcado.btJugar.visibility = View.INVISIBLE
-            miBindingAhorcado.tvPalabraEscondida.text=convertirPalabra(palabra).toString()
+            miBindingAhorcado.tvPalabraEscondida.text =
+                ocultarPalabra(palabras[numPalabra]).joinToString(" ")
+            miBindingAhorcado.ivImagenesAhorcado.setImageResource(
+                imagenesAhorcado.getResourceId(
+                    0,
+                    -1
+                )
+            )
         }
 
-    }
-    fun convertirPalabra(palabra:String): List<Char>{
-        var palabraOculta:List<Char> =listOf()
-        for(i in palabra){
-            palabraOculta+='_'
+        miBindingAhorcado.btComprobar.setOnClickListener {
+
+            if (miBindingAhorcado.etLetra.text.isEmpty()) {
+                Toast.makeText(this, "Introduzca una letra", Toast.LENGTH_LONG).show()
+            } else if (miBindingAhorcado.etLetra.text.length != 1) {
+                Toast.makeText(this, "Solo puede introducir una letra", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                var caracter = miBindingAhorcado.etLetra.text.toString().uppercase()
+                var posiciones: MutableList<Int> =
+                    letraEncontrada(caracter[0], palabras[numPalabra])
+                if (posiciones.isNotEmpty()) {
+                    palabraOculta = mostrarLetra(posiciones, palabraOculta, caracter[0])
+                    miBindingAhorcado.tvPalabraEscondida.text = palabraOculta.joinToString(" ")
+                    miBindingAhorcado.etLetra.text.clear()
+                } else {
+                    miBindingAhorcado.ivImagenesAhorcado.setImageResource(
+                        imagenesAhorcado.getResourceId(
+                            imagenActual,
+                            -1
+                        )
+                    )
+                    intentosUsuario++
+                    imagenActual++
+                    miBindingAhorcado.tvIntentos.text = "Intentos: ${intentos - intentosUsuario}"
+                    miBindingAhorcado.etLetra.text.clear()
+                }
+            }
+            if (intentosUsuario >= intentos) {
+                Toast.makeText(this, "Perdiste", Toast.LENGTH_LONG).show()
+                reiniciarJuego()
+
+            }
+            if (palabraOculta.joinToString("") == palabras[numPalabra]) {
+                numPalabra++
+                siguientePalabra()
+            }
         }
-        return palabraOculta
+        miBindingAhorcado.btSalir.setOnClickListener {
+            val pantallaPrincipal= Intent(this, MainActivity::class.java)
+            startActivity(pantallaPrincipal)
+            finish()
+        }
+    }
+
+    fun reiniciarJuego() {
+        // Ocultar botones y EditText de juego
+        miBindingAhorcado.btComprobar.visibility = View.GONE
+        miBindingAhorcado.etLetra.visibility = View.GONE
+        miBindingAhorcado.tvPalabraEscondida.visibility = View.GONE
+        miBindingAhorcado.tvIntentos.visibility = View.GONE
+        miBindingAhorcado.ivImagenesAhorcado.visibility = View.GONE
+
+        // Mostrar solo el botón Jugar
+        miBindingAhorcado.btJugar.visibility = View.VISIBLE
+    }
+
+    fun siguientePalabra() {
+        if (numPalabra >= palabras.size) {
+            Toast.makeText(this, "Terminaste el juego", Toast.LENGTH_LONG).show()
+            numPalabra = 0
+            val pantallaPrincipal = Intent(this, MainActivity::class.java)
+            startActivity(pantallaPrincipal)
+            finish()
+        }
+
+        palabraOculta = ocultarPalabra(palabras[numPalabra])
+        intentosUsuario = 0
+        miBindingAhorcado.ivImagenesAhorcado.setImageResource(
+            imagenesAhorcado.getResourceId(
+                0,
+                -1
+            )
+        )
+        miBindingAhorcado.tvPalabraEscondida.text = palabraOculta.joinToString(" ")
+        miBindingAhorcado.tvIntentos.text = "Intentos: ${intentos - intentosUsuario}"
+        miBindingAhorcado.etLetra.text.clear()
     }
 }

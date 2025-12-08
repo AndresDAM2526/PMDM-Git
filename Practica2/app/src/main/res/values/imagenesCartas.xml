@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="imagenesCartas">
+        <item>@drawable/as</item>
+        <item>@drawable/carta_2</item>
+        <item>@drawable/carta_3</item>
+        <item>@drawable/carta_4</item>
+        <item>@drawable/carta_5</item>
+        <item>@drawable/carta_6</item>
+        <item>@drawable/carta_7</item>
+        <item>@drawable/carta_8</item>
+        <item>@drawable/carta_9</item>
+        <item>@drawable/carta_10</item>
+        <item>@drawable/j</item>
+        <item>@drawable/q</item>
+        <item>@drawable/k</item>
+        <item>@drawable/parte_trasera</item>
+    </array>
+</resources>
