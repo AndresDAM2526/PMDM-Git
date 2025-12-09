@@ -22,6 +22,8 @@ class Ahorcado : AppCompatActivity() {
     var palabras: List<String> = listOf("ORDENADOR", "RATON", "VEHICULO", "VENTANA", "BARCO")
     var palabraOculta: MutableList<Char> = mutableListOf()
 
+    var puntuacion: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         miBindingAhorcado = ActivityAhorcadoBinding.inflate(layoutInflater)
 
@@ -52,6 +54,9 @@ class Ahorcado : AppCompatActivity() {
             miBindingAhorcado.tvPalabraEscondida.visibility = View.VISIBLE
             miBindingAhorcado.btComprobar.visibility = View.VISIBLE
             miBindingAhorcado.btJugar.visibility = View.INVISIBLE
+            miBindingAhorcado.tvPuntuacion.visibility = View.VISIBLE
+            miBindingAhorcado.tvIntentos.visibility = View.VISIBLE
+            miBindingAhorcado.tvPuntuacion.text = "Puntuación $puntuacion"
             miBindingAhorcado.tvPalabraEscondida.text =
                 ocultarPalabra(palabras[numPalabra]).joinToString(" ")
             miBindingAhorcado.ivImagenesAhorcado.setImageResource(
@@ -77,7 +82,16 @@ class Ahorcado : AppCompatActivity() {
                     palabraOculta = mostrarLetra(posiciones, palabraOculta, caracter[0])
                     miBindingAhorcado.tvPalabraEscondida.text = palabraOculta.joinToString(" ")
                     miBindingAhorcado.etLetra.text.clear()
+                    puntuacion += 5
+                    miBindingAhorcado.tvPuntuacion.text = "Puntuación: $puntuacion"
                 } else {
+                    if (puntuacion == 0) {
+                        puntuacion = 0
+                    } else {
+                        puntuacion--
+                    }
+
+                    miBindingAhorcado.tvPuntuacion.text = "Puntuación: $puntuacion"
                     miBindingAhorcado.ivImagenesAhorcado.setImageResource(
                         imagenesAhorcado.getResourceId(
                             imagenActual,
@@ -90,6 +104,7 @@ class Ahorcado : AppCompatActivity() {
                     miBindingAhorcado.etLetra.text.clear()
                 }
             }
+
             if (intentosUsuario >= intentos) {
                 Toast.makeText(this, "Perdiste", Toast.LENGTH_LONG).show()
                 reiniciarJuego()
@@ -101,7 +116,7 @@ class Ahorcado : AppCompatActivity() {
             }
         }
         miBindingAhorcado.btSalir.setOnClickListener {
-            val pantallaPrincipal= Intent(this, MainActivity::class.java)
+            val pantallaPrincipal = Intent(this, MainActivity::class.java)
             startActivity(pantallaPrincipal)
             finish()
         }
@@ -114,6 +129,7 @@ class Ahorcado : AppCompatActivity() {
         miBindingAhorcado.tvPalabraEscondida.visibility = View.GONE
         miBindingAhorcado.tvIntentos.visibility = View.GONE
         miBindingAhorcado.ivImagenesAhorcado.visibility = View.GONE
+        miBindingAhorcado.tvPuntuacion.visibility= View.GONE
 
         // Mostrar solo el botón Jugar
         miBindingAhorcado.btJugar.visibility = View.VISIBLE

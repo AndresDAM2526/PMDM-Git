@@ -20,6 +20,8 @@ class Blackjack : AppCompatActivity() {
     var contadorCrupier: Int = 0
     var cartaGeneradaUsuario: String = ""
     var cartaGeneradaCrupier: String = ""
+
+    var saldo: Int = 5
     private lateinit var miBindingBlackjack: ActivityBlackjackBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         miBindingBlackjack = ActivityBlackjackBinding.inflate(layoutInflater)
@@ -49,6 +51,8 @@ class Blackjack : AppCompatActivity() {
         miBindingBlackjack.tvTusCartas.visibility = View.INVISIBLE
 
         miBindingBlackjack.btJugar.setOnClickListener {
+            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+            miBindingBlackjack.tvSaldo.visibility = View.VISIBLE
             miBindingBlackjack.flCartasUsuario.visibility = View.VISIBLE
             miBindingBlackjack.flCartasCrupier.visibility = View.VISIBLE
             miBindingBlackjack.btJugar.visibility = View.INVISIBLE
@@ -68,12 +72,22 @@ class Blackjack : AppCompatActivity() {
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                 }, 1000)
+                saldo += 5
+                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
             } else if (contadorUsuario > 21) {
                 mostrarNotificacion(this, "Te has pasado")
                 miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                 miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                 miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                if (saldo == 0) {
+                    saldo = 0
+                } else {
+                    saldo -= 10
+                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                }
+
             }
 
             cartaGeneradaCrupier = generarCarta()
@@ -87,10 +101,9 @@ class Blackjack : AppCompatActivity() {
         }
 
         miBindingBlackjack.btPedirCarta.setOnClickListener {
-
             cartaGeneradaUsuario = generarCarta()
             anadirCartaUsuario(obtenerIndice(cartaGeneradaUsuario))
-            if (cartaGeneradaUsuario.equals("AS") && (contadorUsuario + obtenerValorCarta(
+            if (cartaGeneradaUsuario.equals("as") && (contadorUsuario + obtenerValorCarta(
                     cartaGeneradaUsuario
                 ) > 21)
             ) {
@@ -101,38 +114,49 @@ class Blackjack : AppCompatActivity() {
             miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
 
             if (contadorUsuario > 21) {
+                contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+                mostrarNotificacion(this, "Perdiste")
+                miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
-                cartaGeneradaCrupier = generarCarta()
-                anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
-                if (cartaGeneradaCrupier.equals("AS") && (contadorCrupier + obtenerValorCarta(
-                        cartaGeneradaCrupier
-                    ) > 21)
-                ) contadorCrupier += 1
-                else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    mostrarNotificacion(this, "Perdiste")
-                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-                }, 1500)
-
+                if (saldo < 10) {
+                    saldo = 0
+                } else {
+                    saldo -= 10
+                }
+                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
 
             } else if (contadorUsuario == 21) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    mostrarNotificacion(this, "Ganaste")
-                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-                }, 1500)
-
-
+                mostrarNotificacion(this, "Ganaste")
+                miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                saldo += 5
+                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+            }
+            if (saldo == 0) {
+                mostrarNotificacion(
+                    this,
+                    "Se ha agotado el crédito.Tienes que volver a la pestaña principal"
+                )
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.GONE
+                miBindingBlackjack.tvPuntuacionUsuario.visibility = View.GONE
+                miBindingBlackjack.btVolverAJugar.visibility = View.INVISIBLE
+                miBindingBlackjack.flCartasUsuario.visibility = View.GONE
+                miBindingBlackjack.flCartasCrupier.visibility = View.GONE
+                miBindingBlackjack.btPedirCarta.visibility = View.GONE
+                miBindingBlackjack.btPlantarse.visibility = View.GONE
+                miBindingBlackjack.tvMensajeFinal.text = "¡Muchas gracias por jugar!"
+                miBindingBlackjack.tvMensajeFinal.visibility = View.VISIBLE
+                //return@setOnClickListener
             }
         }
 
         miBindingBlackjack.btPlantarse.setOnClickListener {
             cartaGeneradaCrupier = generarCarta()
             anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
-            if (cartaGeneradaCrupier.equals("AS") && (contadorCrupier + obtenerValorCarta(
+            if (cartaGeneradaCrupier.equals("as") && (contadorCrupier + obtenerValorCarta(
                     cartaGeneradaCrupier
                 ) > 21)
             ) contadorCrupier += 1
@@ -140,42 +164,79 @@ class Blackjack : AppCompatActivity() {
 
             miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
             if (contadorCrupier == 21) {
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     mostrarNotificacion(this, "Perdiste")
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                     miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
                 }, 1500)
-
+                if (saldo < 10) {
+                    saldo = 0
+                } else {
+                    saldo -= 10
+                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                }
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
             } else if (contadorCrupier > 21) {
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     mostrarNotificacion(this, "Ganaste")
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                     miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
                 }, 1500)
+                saldo += 5
+                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
             } else if (21 - contadorUsuario < 21 - contadorCrupier) {
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     mostrarNotificacion(this, "Ganaste")
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                     miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
                 }, 1500)
-
+                saldo += 5
+                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
             } else {
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
                 Handler(Looper.getMainLooper()).postDelayed({
                     mostrarNotificacion(this, "Perdiste")
                     miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
                     miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
                     miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
                 }, 1500)
+                if (saldo < 10) {
+                    saldo = 0
+                } else {
+                    saldo -= 10
+                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                }
+                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
 
             }
+            if (saldo == 0) {
+                mostrarNotificacion(
+                    this,
+                    "Se ha agotado el crédito.Tienes que volver a la pestaña principal"
+                )
+                miBindingBlackjack.tvPuntuacionCrupier.visibility = View.GONE
+                miBindingBlackjack.tvPuntuacionUsuario.visibility = View.GONE
+                miBindingBlackjack.btVolverAJugar.visibility = View.INVISIBLE
+                miBindingBlackjack.flCartasUsuario.visibility = View.GONE
+                miBindingBlackjack.flCartasCrupier.visibility = View.GONE
+                miBindingBlackjack.btPedirCarta.visibility = View.GONE
+                miBindingBlackjack.btPlantarse.visibility = View.GONE
+                miBindingBlackjack.tvMensajeFinal.text = "¡Muchas gracias por jugar!"
+                miBindingBlackjack.tvMensajeFinal.visibility = View.VISIBLE
+            }
 
-            miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+
         }
 
         miBindingBlackjack.btSalir.setOnClickListener {

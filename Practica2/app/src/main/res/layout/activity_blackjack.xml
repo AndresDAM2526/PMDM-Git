@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarBlackJack"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -46,7 +46,8 @@
                 android:id="@+id/tvSaldo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -81,7 +82,14 @@
                 android:id="@+id/btJugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jugar" />
+                android:text="Introducir moneda" />
+
+            <TextView
+                android:id="@+id/tvMensajeFinal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btVolverAJugar"
@@ -133,6 +141,7 @@
                     android:layout_weight="1"
                     android:text="Plantarse" />
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
