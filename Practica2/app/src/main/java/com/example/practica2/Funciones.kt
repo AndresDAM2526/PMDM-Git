@@ -1,6 +1,7 @@
 package com.example.practica2
 
 import android.content.Context
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import kotlin.random.Random
 
@@ -77,13 +78,24 @@ fun obtenerIndice(nombreCarta: String): Int {
 
 }
 
-fun mostrarNotificacion(context: Context, mensaje: String) {
+fun mostrarNotificacion(context: Context, mensaje: String,aceptarPulsado:()-> Unit) {
     val dialog = AlertDialog.Builder(context)
         .setMessage(mensaje)
         .setPositiveButton("Aceptar", { dialog, which ->
             dialog.dismiss()
         })
+        .setOnDismissListener { aceptarPulsado() }
         .create()
     dialog.show()
+}
+
+fun saldoDisponible(saldo: Int): Boolean {
+    if (saldo == 0) return false else return true
+}
+
+
+
+fun crupierSePlanta(): Boolean {
+    return Random.nextBoolean()
 }
 

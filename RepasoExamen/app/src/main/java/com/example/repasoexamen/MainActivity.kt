@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     fun inicializarReloj(){
         miReloj=object : CountDownTimer(1800000,1000){
             override fun onFinish() {

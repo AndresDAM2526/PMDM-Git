@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
         android:text="BLACKJACK"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/tvPrincipal"
         app:layout_constraintStart_toStartOf="@+id/tvPrincipal"
         app:layout_constraintTop_toBottomOf="@+id/tvPrincipal" />
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="AHORCADO"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/btBlackJack"
         app:layout_constraintStart_toStartOf="@+id/btBlackJack"
         app:layout_constraintTop_toBottomOf="@+id/btBlackJack" />
