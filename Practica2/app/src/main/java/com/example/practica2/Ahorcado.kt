@@ -85,7 +85,7 @@ class Ahorcado : AppCompatActivity() {
         }
 
         miBindingAhorcado.btComprobar.setOnClickListener {
-            miBindingAhorcado.ivImagenesAhorcado.visibility=View.VISIBLE
+
 
             if (miBindingAhorcado.etLetra.text.isEmpty()) {
                 Toast.makeText(this, "Introduzca una letra", Toast.LENGTH_LONG).show()
@@ -104,6 +104,7 @@ class Ahorcado : AppCompatActivity() {
                     puntuacion += 2
                     miBindingAhorcado.tvPuntuacion.text = "Puntuación: $puntuacion"
                 } else {
+                    miBindingAhorcado.ivImagenesAhorcado.visibility=View.VISIBLE
                     if (puntuacion == 0) {
                         puntuacion = 0
                     } else {
@@ -119,6 +120,7 @@ class Ahorcado : AppCompatActivity() {
                     )
                     intentosUsuario++
                     imagenActual++
+
                     miBindingAhorcado.tvIntentos.text = "Intentos: ${intentos - intentosUsuario}"
                     miBindingAhorcado.etLetra.text.clear()
                 }
@@ -137,6 +139,8 @@ class Ahorcado : AppCompatActivity() {
             if (palabraOculta.joinToString("") == palabras[numPalabra]) {
                 numPalabra++
                 siguientePalabra(this)
+                puntuacion+=4
+                miBindingAhorcado.tvPuntuacion.text = "Puntuación: $puntuacion"
             }
         }
         miBindingAhorcado.btSalir.setOnClickListener {
