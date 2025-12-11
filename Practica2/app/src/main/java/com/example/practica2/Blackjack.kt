@@ -1,12 +1,8 @@
 package com.example.practica2
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -57,10 +53,11 @@ class Blackjack : AppCompatActivity() {
         miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
         miBindingBlackjack.tvCartasCrupier.visibility = View.INVISIBLE
         miBindingBlackjack.tvTusCartas.visibility = View.INVISIBLE
+        miBindingBlackjack.btJugar.text = "Introducir moneda"
 
         miBindingBlackjack.btJugar.setOnClickListener {
             sonidoInicial.start()
-            miBindingBlackjack.tvTextoInicial.visibility= View.GONE
+            miBindingBlackjack.tvTextoInicial.visibility = View.GONE
             miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
             miBindingBlackjack.tvSaldo.visibility = View.VISIBLE
             miBindingBlackjack.flCartasUsuario.visibility = View.VISIBLE
@@ -74,26 +71,7 @@ class Blackjack : AppCompatActivity() {
                 cartaGeneradaUsuario = generarCarta()
                 anadirCartaUsuario(obtenerIndice(cartaGeneradaUsuario))
                 contadorUsuario += obtenerValorCarta(cartaGeneradaUsuario)
-            }
-            miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
-            if (contadorUsuario == 21) {
-                mostrarNotificacion(this, "Ganaste", {})
-                miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-                miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-                saldo += 5
-                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-                miBindingBlackjack.btVolverAJugar.text = "Volver a jugar"
-
-            } else if (contadorUsuario > 21) {
-                jugarDeNuevo("Te has pasado")
-                if (saldo == 0) {
-                    saldo = 0
-                } else {
-                    saldo -= 10
-                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                }
-
+                miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
             }
 
             cartaGeneradaCrupier = generarCarta()
@@ -101,17 +79,38 @@ class Blackjack : AppCompatActivity() {
             contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
             cartaGeneradaCrupier = generarCarta()
             anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
-            contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-            if (contadorUsuario == contadorCrupier) {
+            if (cartaGeneradaCrupier.equals("as") && (contadorCrupier + obtenerValorCarta(
+                    cartaGeneradaCrupier
+                ) > 21)
+            ) contadorCrupier += 1
+            else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+
+            if (contadorUsuario == 21 && contadorCrupier == 21) {
                 jugarDeNuevo("Empate")
-                finalPartida(saldo)
+            } else if (contadorUsuario == 21) {
+                mostrarNotificacion(this, "Ganaste") {
+                    miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+                    miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+                    saldo += 5
+                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                    miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+                    miBindingBlackjack.btVolverAJugar.text = "Volver a jugar"
+                }
+
+            } else if (contadorUsuario > 21) {
+                mostrarNotificacion(
+                    this,
+                    "Perdiste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier"
+                ) {
+                    restarSaldo()
+                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+                }
             }
-
-
+            finalPartida(saldo)
         }
 
         miBindingBlackjack.btPedirCarta.setOnClickListener {
-            val pedirCarta= MediaPlayer.create(this,R.raw.carta)
+            val pedirCarta = MediaPlayer.create(this, R.raw.carta)
             pedirCarta.start()
             cartaGeneradaUsuario = generarCarta()
             anadirCartaUsuario(obtenerIndice(cartaGeneradaUsuario))
@@ -125,103 +124,33 @@ class Blackjack : AppCompatActivity() {
             }
             miBindingBlackjack.tvPuntuacionUsuario.text = contadorUsuario.toString()
 
-
-            if (contadorUsuario > 21) {
-                contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+            if (contadorUsuario == 21 && contadorCrupier == 21) {
+                jugarDeNuevo("Empate")
+            } else if (contadorUsuario > 21) {
                 jugarDeNuevo("Te has pasado")
-                if (saldo < 10) {
-                    saldo = 0
-                } else {
-                    saldo -= 10
-                }
+                restarSaldo()
                 miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                finalPartida(saldo)
 
             } else if (contadorUsuario == 21) {
                 jugarDeNuevo("Ganaste")
                 saldo += 5
                 miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                finalPartida(saldo)
             }
-            if (contadorUsuario == contadorCrupier) {
-                jugarDeNuevo("Empate")
-                finalPartida(saldo)
-            }
+            finalPartida(saldo)
 
         }
 
         miBindingBlackjack.btPlantarse.setOnClickListener {
-            cartaGeneradaCrupier = generarCarta()
-            anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
-            if (cartaGeneradaCrupier.equals("as") && (contadorCrupier + obtenerValorCarta(
-                    cartaGeneradaCrupier
-                ) > 21)
-            ) contadorCrupier += 1
-            else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
-
-            miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
-
+            turnoCrupier()
             if (contadorCrupier >= 17 && crupierSePlanta()) {
                 mostrarNotificacion(this, "El crupier se planta") {
-                    if (contadorUsuario < 21 && contadorCrupier > 21) {
-                        jugarDeNuevo("Ganaste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
-                        saldo += 5
-                        miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                        finalPartida(saldo)
-                    } else if (contadorUsuario > 21) {
-                        jugarDeNuevo("Perdiste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
-                        saldo -= 10
-                        miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                        finalPartida(saldo)
-                    } else if (contadorUsuario < 21 && contadorCrupier < 21) {
-                        if (21 - contadorUsuario < 21 - contadorCrupier) {
-                            jugarDeNuevo("Ganaste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
-                            saldo += 5
-                            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                            finalPartida(saldo)
-                        } else {
-                            jugarDeNuevo("Perdiste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
-                            saldo -= 10
-                            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                            finalPartida(saldo)
-                        }
-                    }
+                    comprobarFinalPartida()
                 }
-            }
-            if (contadorCrupier == 21) {
-                jugarDeNuevo("Perdiste")
-                if (saldo < 10) {
-                    saldo = 0
-                } else {
-                    saldo -= 10
-                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                }
-                finalPartida(saldo)
-
-            } else if (contadorCrupier > 21) {
-                saldo += 5
-                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                finalPartida(saldo)
-            } else if (21 - contadorUsuario < 21 - contadorCrupier) {
-                jugarDeNuevo("Ganaste")
-                saldo += 5
-                miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                finalPartida(saldo)
             } else {
-
-                jugarDeNuevo("Perdiste")
-                if (saldo < 10) {
-                    saldo = 0
-                } else {
-                    saldo -= 10
-                    miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
-                }
-                finalPartida(saldo)
+                turnoCrupier()
+                comprobarFinalPartida()
             }
-            if (contadorUsuario == contadorCrupier) {
-                jugarDeNuevo("Empate")
-                finalPartida(saldo)
-            }
+            finalPartida(saldo)
         }
 
         miBindingBlackjack.btSalir.setOnClickListener {
@@ -247,9 +176,11 @@ class Blackjack : AppCompatActivity() {
         miBindingBlackjack.tvPuntuacionCrupier.visibility = View.INVISIBLE
         miBindingBlackjack.btVolverAJugar.visibility = View.INVISIBLE
         miBindingBlackjack.btJugar.visibility = View.VISIBLE
+        miBindingBlackjack.btJugar.text = "Jugar"
 
 
     }
+
 
     fun anadirCartaCrupier(indiceCarta: Int) {
         val cartas = resources.obtainTypedArray(R.array.imagenesCartas)
@@ -273,11 +204,23 @@ class Blackjack : AppCompatActivity() {
         miBindingBlackjack.flCartasUsuario.addView(carta)
     }
 
+    fun turnoCrupier() {
+        cartaGeneradaCrupier = generarCarta()
+        anadirCartaCrupier(obtenerIndice(cartaGeneradaCrupier))
+        if (cartaGeneradaCrupier.equals("as") && (contadorCrupier + obtenerValorCarta(
+                cartaGeneradaCrupier
+            ) > 21)
+        ) contadorCrupier += 1
+        else contadorCrupier += obtenerValorCarta(cartaGeneradaCrupier)
+
+        miBindingBlackjack.tvPuntuacionCrupier.text = contadorCrupier.toString()
+    }
+
     fun finalPartida(saldo: Int): Unit {
         if (saldo == 0) {
             miBindingBlackjack.tvPuntuacionCrupier.visibility = View.GONE
             miBindingBlackjack.tvPuntuacionUsuario.visibility = View.GONE
-            miBindingBlackjack.btVolverAJugar.visibility = View.INVISIBLE
+            miBindingBlackjack.btVolverAJugar.visibility = View.GONE
             miBindingBlackjack.flCartasUsuario.visibility = View.GONE
             miBindingBlackjack.flCartasCrupier.visibility = View.GONE
             miBindingBlackjack.btPedirCarta.visibility = View.GONE
@@ -289,12 +232,56 @@ class Blackjack : AppCompatActivity() {
     }
 
     fun jugarDeNuevo(mensaje: String): Unit {
-        miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
-        miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
-        miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
-        miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
-        miBindingBlackjack.btVolverAJugar.text = "Volver a jugar"
-        mostrarNotificacion(this, mensaje, {})
+        mostrarNotificacion(this, mensaje) {
+            if (saldo == 0) {
+
+                miBindingBlackjack.btVolverAJugar.visibility = View.GONE
+                return@mostrarNotificacion
+            }
+            miBindingBlackjack.btVolverAJugar.visibility = View.VISIBLE
+            miBindingBlackjack.btVolverAJugar.text = "Volver a jugar"
+            miBindingBlackjack.btPlantarse.visibility = View.INVISIBLE
+            miBindingBlackjack.btPedirCarta.visibility = View.INVISIBLE
+            miBindingBlackjack.tvPuntuacionCrupier.visibility = View.VISIBLE
+        }
+    }
+
+    //Función que se llama cuando el crupier se planta
+    fun comprobarFinalPartida() {
+        // Empate
+        if (contadorUsuario == contadorCrupier) {
+            jugarDeNuevo("Empate\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
+            // No hay ajuste de saldo en empate (push)
+
+            //Gana el usuario
+        } else if (contadorCrupier > 21) {
+            jugarDeNuevo("Ganaste (Crupier se pasó)\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
+            saldo += 5
+            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+
+            //El usuario se ha pasado
+        } else if (contadorUsuario > 21) {
+            jugarDeNuevo("Perdiste (Te pasaste)\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
+
+            restarSaldo()
+            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+
+            // 4. Comparación de Puntuación (Si nadie se pasó ni empataron)
+            // El usuario gana si su puntuación es más alta (más cerca de 21)
+        } else if (contadorUsuario > contadorCrupier) {
+            jugarDeNuevo("Ganaste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
+            saldo += 5
+            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+
+            // 5. El usuario pierde (Crupier tiene más puntos)
+        } else {
+            jugarDeNuevo("Perdiste\nUsuario: $contadorUsuario\nCrupier: $contadorCrupier")
+            restarSaldo()
+            miBindingBlackjack.tvSaldo.text = "Saldo= $saldo"
+        }
+
+        // Llamada final que siempre se ejecuta.
+        finalPartida(saldo)
     }
 
     fun cambiarColorBotones(idColor: Int) {
@@ -367,6 +354,15 @@ class Blackjack : AppCompatActivity() {
                 idColor
             )
         )
+    }
+
+    //Función que se llama cuando el usuario pierde, si el saldo es menor que 10, le asigno 0 para evitar números negativos
+    fun restarSaldo() {
+        if (saldo < 10) {
+            saldo = 0
+        } else {
+            saldo -= 10
+        }
     }
 
 }

@@ -61,11 +61,11 @@ class Ahorcado : AppCompatActivity() {
             inicializarReloj(this)
             imagenActual = 0
             intentosUsuario = 0
-            intentos = 5
+            intentos = 6
             palabraOculta = palabras[numPalabra].map { '_' }.toMutableList()
             miBindingAhorcado.tvInicio.visibility = View.GONE
             miBindingAhorcado.tvPuntuacion.visibility = View.VISIBLE
-            miBindingAhorcado.ivImagenesAhorcado.visibility = View.VISIBLE
+            miBindingAhorcado.ivImagenesAhorcado.visibility = View.GONE
             miBindingAhorcado.tvIntentos.visibility = View.VISIBLE
             miBindingAhorcado.etLetra.visibility = View.VISIBLE
             miBindingAhorcado.tvPalabraEscondida.visibility = View.VISIBLE
@@ -85,6 +85,7 @@ class Ahorcado : AppCompatActivity() {
         }
 
         miBindingAhorcado.btComprobar.setOnClickListener {
+            miBindingAhorcado.ivImagenesAhorcado.visibility=View.VISIBLE
 
             if (miBindingAhorcado.etLetra.text.isEmpty()) {
                 Toast.makeText(this, "Introduzca una letra", Toast.LENGTH_LONG).show()
@@ -95,11 +96,12 @@ class Ahorcado : AppCompatActivity() {
                 var caracter = miBindingAhorcado.etLetra.text.toString().uppercase()
                 var posiciones: MutableList<Int> =
                     letraEncontrada(caracter[0], palabras[numPalabra])
+                //La letra introducida por el usuario se encuentra en la palabra
                 if (posiciones.isNotEmpty()) {
                     palabraOculta = mostrarLetra(posiciones, palabraOculta, caracter[0])
                     miBindingAhorcado.tvPalabraEscondida.text = palabraOculta.joinToString(" ")
                     miBindingAhorcado.etLetra.text.clear()
-                    puntuacion += 5
+                    puntuacion += 2
                     miBindingAhorcado.tvPuntuacion.text = "Puntuación: $puntuacion"
                 } else {
                     if (puntuacion == 0) {
@@ -122,9 +124,14 @@ class Ahorcado : AppCompatActivity() {
                 }
             }
 
+            //El usuario ha alcanzado el número máximo de intentos
             if (intentosUsuario >= intentos) {
-                Toast.makeText(this, "Perdiste", Toast.LENGTH_LONG).show()
-                reiniciarJuego()
+                mostrarNotificacion(this,"Perdiste"){
+                    reiniciarJuego()
+                    miReloj.cancel()
+                    miBindingAhorcado.tvTemporizador.visibility=View.INVISIBLE
+                }
+
 
             }
             if (palabraOculta.joinToString("") == palabras[numPalabra]) {
@@ -153,6 +160,7 @@ class Ahorcado : AppCompatActivity() {
         miBindingAhorcado.btJugar.visibility = View.VISIBLE
     }
 
+    //Función para avanzar a la siguiente palabra de la lista de palabras
     fun siguientePalabra(context: Context) {
         if (numPalabra >= palabras.size) {
             mostrarNotificacion(context, "Terminaste el juego") {
@@ -177,6 +185,7 @@ class Ahorcado : AppCompatActivity() {
         miBindingAhorcado.etLetra.text.clear()
     }
 
+    //Función para crear el temporizador
     fun inicializarReloj(context: Context) {
         val sonidoFin = MediaPlayer.create(this, R.raw.finaltemporizador)
         miReloj = object : CountDownTimer(180000, 1000) {

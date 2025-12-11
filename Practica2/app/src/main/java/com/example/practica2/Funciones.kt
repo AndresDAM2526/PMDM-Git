@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import kotlin.random.Random
 
+//Función que crea una lista de Char que almacena tantos _ como letras tenga la palabra
 fun ocultarPalabra(palabra: String): MutableList<Char> {
     var palabraOculta: MutableList<Char> = mutableListOf()
     for (i in palabra) {
@@ -13,6 +14,7 @@ fun ocultarPalabra(palabra: String): MutableList<Char> {
     return palabraOculta
 }
 
+//Función que comprueba si el Char que recibe como parámetro está dentro de la palabra y devuelve una lista con las posiciones donde se encuentra
 fun letraEncontrada(caracter: Char, palabraOriginal: String): MutableList<Int> {
     var posiciones: MutableList<Int> = mutableListOf()
     for (i in palabraOriginal.indices) {
@@ -22,7 +24,7 @@ fun letraEncontrada(caracter: Char, palabraOriginal: String): MutableList<Int> {
     }
     return posiciones
 }
-
+//Función que recibe las posiciones de la letra encontrada y el caracter por el que tiene que sustituir el _
 fun mostrarLetra(
     posiciones: MutableList<Int>,
     palabraOculta: MutableList<Char>,
@@ -33,6 +35,7 @@ fun mostrarLetra(
 }
 
 
+//Función para generar la carta
 fun generarCarta(): String {
     var numRandom = Random.nextInt(13) + 1
     return when (numRandom) {
@@ -45,6 +48,7 @@ fun generarCarta(): String {
     }
 }
 
+//Funcion para obtener el valor de la carta que genera la función generarCarta()
 fun obtenerValorCarta(carta: String): Int {
     return when (carta) {
         "as" -> 11
@@ -55,7 +59,7 @@ fun obtenerValorCarta(carta: String): Int {
     }
 }
 
-
+//Función para obtenener el indice de la carta que se mostrará por pantalla
 fun obtenerIndice(nombreCarta: String): Int {
     return when (nombreCarta) {
         "as" -> 0
@@ -78,6 +82,7 @@ fun obtenerIndice(nombreCarta: String): Int {
 
 }
 
+//Función para mostrar un mensaje por pantalla
 fun mostrarNotificacion(context: Context, mensaje: String,aceptarPulsado:()-> Unit) {
     val dialog = AlertDialog.Builder(context)
         .setMessage(mensaje)
@@ -89,12 +94,9 @@ fun mostrarNotificacion(context: Context, mensaje: String,aceptarPulsado:()-> Un
     dialog.show()
 }
 
-fun saldoDisponible(saldo: Int): Boolean {
-    if (saldo == 0) return false else return true
-}
 
 
-
+//Función para simular que el crupier se planta
 fun crupierSePlanta(): Boolean {
     return Random.nextBoolean()
 }
