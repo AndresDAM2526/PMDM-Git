@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -61,11 +60,9 @@ data class Elemento(val texto: String, var estado_check: Boolean) {}
 @Composable
 fun MyLazyColumn() {
     var context = LocalContext.current
-    var lista =
-        remember { List<Elemento>(100) { Elemento("Elemento $it", false) } }.toMutableStateList()
+    var lista by remember { mutableStateOf(List(100) { Elemento("Elemento $it", false) }) }
     LazyColumn {
-        itemsIndexed(lista) { indice, elemento ->
-            elemento.hashCode()
+        itemsIndexed(lista, key = { index, elemento -> elemento.hashCode() }) { indice, elemento ->
             var chequeado by remember { mutableStateOf(false) }
             Row(
                 modifier = Modifier
@@ -74,10 +71,25 @@ fun MyLazyColumn() {
             ) {
                 Text("Indice: $indice - ${elemento.texto}")
                 Spacer(modifier = Modifier.weight(1f))
-                Checkbox(elemento.estado_check, onCheckedChange = { elemento.estado_check = !chequeado })
+                Checkbox(
+                    elemento.estado_check,
+                    onCheckedChange = {
+                        //Aqui tendremos que provocar un cambio en la lista para
+                        //que se recomponga la lista
+                        //Creo una nueva lista con todos los elementos igual que la lista original excepto
+                        //el valor del atributo chequeado del elemento clicado
+                        lista = lista.map { item ->
+                            if (elemento == item) {
+                                item.copy(estado_check = !chequeado)
+                            } else {
+                                item
+                            }
+                        }
+                        elemento.estado_check = !elemento.estado_check
+                    })
                 Button(onClick = {
                     Toast.makeText(context, "Has pulsado $elemento", Toast.LENGTH_SHORT).show()
-                    lista.remove(elemento)
+                    lista = lista.toMutableList().apply { remove(elemento) }
 
                 }) {
                     Text(text = "Aceptar")
