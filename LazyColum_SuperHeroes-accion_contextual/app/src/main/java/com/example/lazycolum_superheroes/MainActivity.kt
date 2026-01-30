@@ -52,9 +52,9 @@ class MainActivity : ComponentActivity() {
 fun Pantalla() {
     val superheroeViewModel: SuperHeroeViewModel = viewModel()
     //Variable para controlar si se muestra el Dialogo de editar SuperHeroe
-    var mostrar_dialogo_editar by remember { mutableStateOf(false) }
+    var mostrar_dialogo_editar = superheroeViewModel.mostrar_dialogo_editar
     //Definimos una variable para saber si esta activado el menu de acción contextual en el TopBar
-    var action_mode by remember { mutableStateOf(false) }
+    var action_mode = superheroeViewModel.action_mode
     //Defino un listado de elementos seleccionados, solamente su posición
     val lista_seleccionados = remember { mutableStateListOf<SuperHeroe>() }
 
@@ -75,14 +75,14 @@ fun Pantalla() {
                     click_atras = {
                         //vacio la lista de seleccionados
                         lista_seleccionados.clear()
-                        action_mode = false
+                        superheroeViewModel.cambiarModo()
 
                     },
                     click_editar = {
                         //ABrir un Dialog para editar el elemento seleccionado
                         //Se supone que solo tiene que haber un elemento seleccionado
                         if (lista_seleccionados.size == 1) {
-                            mostrar_dialogo_editar = true
+                            superheroeViewModel.mostrarDialogo()
                         }
 
                     },
@@ -94,7 +94,7 @@ fun Pantalla() {
                         //Elimino la lista de seleccionados
                         lista_seleccionados.clear()
                         //Cierro el action_mode
-                        action_mode = false
+                        superheroeViewModel.cambiarModo()
 
                     })
             }
@@ -109,10 +109,10 @@ fun Pantalla() {
             borrar_superheroe = {
                 superheroeViewModel.borrarHeroe(it)
                 lista_seleccionados.clear()
-                action_mode = false
+                superheroeViewModel.cambiarModo()
             },
             click_corto_elemento = { heroe ->
-                var heroe=superheroeViewModel.superHeroes[heroe]
+                var heroe = superheroeViewModel.superHeroes[heroe]
                 if (action_mode) {
                     //Añado el elemento a la lista de seleccionados,si no esta seleccionado previamente
                     if (lista_seleccionados.contains(heroe)) {
@@ -120,7 +120,7 @@ fun Pantalla() {
                         lista_seleccionados.remove(heroe)
                         //Si ademas ya no hay elementos seleccionados cierro el action_mode
                         if (lista_seleccionados.size == 0)
-                            action_mode = false
+                            superheroeViewModel.cambiarModo()
                     } else {
                         //Si no lo añado
                         lista_seleccionados.add(heroe)
@@ -130,19 +130,19 @@ fun Pantalla() {
             },
             click_largo_elemento = { indice_elemento ->
                 if (!action_mode) {
-                    action_mode = true
+                    superheroeViewModel.cambiarModo()
                     val superHeroe = superheroeViewModel.superHeroes[indice_elemento]
                     lista_seleccionados.add(superHeroe)
                 }
             },
-            esta_seleccionado = { indice, heroe ->
+            esta_seleccionado = { heroe ->
                 lista_seleccionados.contains(heroe)
             })
         if (mostrar_dialogo_editar) {
             val heroeSeleccionado = lista_seleccionados[0]
             DialogoSuperHeroe(
                 heroeSeleccionado,
-                onDismiss = { mostrar_dialogo_editar = false },
+                onDismiss = { superheroeViewModel.mostrarDialogo() },
                 onGuardar = { superheroe_actualizado ->
                     //Guardo los datos del superheroe
                     superheroeViewModel.actualizarHeroe(heroeSeleccionado, superheroe_actualizado)
@@ -151,7 +151,7 @@ fun Pantalla() {
                     //Vacio la lista de seleccinados
                     lista_seleccionados.clear()
                     //Salgo del action_mode
-                    action_mode = false
+                    superheroeViewModel.cambiarModo()
                 })
         }
     }
@@ -165,7 +165,7 @@ fun ZonaCentral(
     borrar_superheroe: (SuperHeroe) -> Unit,
     click_corto_elemento: (Int) -> Unit,
     click_largo_elemento: (Int) -> Unit,
-    esta_seleccionado: (Int, SuperHeroe) -> Boolean
+    esta_seleccionado: (SuperHeroe) -> Boolean
 ) {
 
     LazyColumn(modifier = modificador.fillMaxSize()) {
@@ -174,7 +174,7 @@ fun ZonaCentral(
             ElementoLazySuperHeroe(
                 her,
                 Modifier,
-                selecionado = { esta_seleccionado(indice, her) },
+                selecionado = { esta_seleccionado(her) },
                 click_borrar = { borrar_superheroe(her) },
                 click_corto = { click_corto_elemento(indice) },
                 click_largo = { click_largo_elemento(indice) })
