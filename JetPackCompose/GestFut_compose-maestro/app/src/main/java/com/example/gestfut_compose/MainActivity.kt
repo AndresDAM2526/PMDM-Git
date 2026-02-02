@@ -1,6 +1,7 @@
 package com.example.gestfut_compose
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,15 +16,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.gestfut.data.Equipo
+import com.example.gestfut.data.EquipoProveedor
 import com.example.gestfut.data.PartidoProveedor
 import com.example.gestfut_compose.navegacion.Calendario
 import com.example.gestfut_compose.navegacion.Clasificacion
 import com.example.gestfut_compose.ui.components.BottomNavItem
 import com.example.gestfut_compose.ui.components.MiTopBar
+import com.example.gestfut_compose.ui.components.infoEquipo
 import com.example.gestfut_compose.ui.components.mibottombar
 import com.example.gestfut_compose.ui.pantallas.clasificacion
 import com.example.gestfut_compose.ui.pantallas.pantallaCalendario
@@ -35,6 +41,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         //Cargo los partidos
         PartidoProveedor.inicializar(this)
+        EquipoProveedor.inicializar(this)
         setContent {
             GestFut_composeTheme {
                 Pantalla_principal()
@@ -46,30 +53,63 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Pantalla_principal() {
+    var contexto = LocalContext.current
     val navController = rememberNavController()
-    //var pantalla_actual by remember { mutableStateOf(BottomNavItem.CalendarioScreen.ruta) }
+    var mostrarDialogo by remember { mutableStateOf(false) }
+    var equipoSeleccionado by remember { mutableStateOf<Equipo?>(null) }
+    val jornadas = remember {
+        PartidoProveedor.partidos.map { it.jornada }.distinct().sorted().map { it.toString() }
+    }
+
+    var jornadaSeleccionada by remember { mutableStateOf(jornadas.first()) }
+    var partidosJornada = remember(jornadaSeleccionada) {
+        PartidoProveedor.partidos.filter {
+            it.jornada.toString().equals(jornadaSeleccionada)
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding(),
-        topBar = { MiTopBar() },
+        topBar = {
+            MiTopBar {
+                val textoCompartir = partidosJornada.joinToString(separator = "\n") {
+                    "${it.equipo_local} - ${it.equipo_visitante}"
+                }
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, "Jornada-$textoCompartir")
+                }
+                contexto.startActivity(Intent.createChooser(intent, "Compartir clasificación vía"))
+            }
+        },
         bottomBar = { mibottombar(navController) { navController.navigate(it) } },
 
-        ) {
-        paddingValues ->
+        ) { paddingValues ->
         NavHost(navController = navController, startDestination = Calendario) {
             composable<Calendario> {
                 pantallaCalendario(
                     modificador = Modifier.padding(paddingValues),
-                    jornadas = listOf("0", "1", "2", "3", "4"),
-                    selectedJornada = "0",
-                    onJornadaSelected = {},
-                    partidos = PartidoProveedor.partidos
+                    jornadas = jornadas,
+                    selectedJornada = jornadaSeleccionada,
+                    onJornadaSelected = { jornadaSeleccionada = it },
+                    partidos = partidosJornada
                 )
             }
             composable<Clasificacion> {
-                clasificacion(modifier = Modifier.padding(paddingValues),)
+                clasificacion(
+                    modifier = Modifier.padding(paddingValues),
+                    EquipoProveedor.equipos,
+                    { equipo ->
+                        equipoSeleccionado = equipo
+                        mostrarDialogo = true
+                    })
             }
+
+        }
+        if (mostrarDialogo == true && equipoSeleccionado != null) {
+            Dialog({ mostrarDialogo = false }) { infoEquipo(equipoSeleccionado!!) }
         }
     }
 }

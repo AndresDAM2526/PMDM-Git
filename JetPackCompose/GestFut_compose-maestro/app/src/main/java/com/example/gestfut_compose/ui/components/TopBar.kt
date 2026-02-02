@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,9 +27,16 @@ import com.example.gestfut_compose.ui.theme.ToolbarTitleStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MiTopBar()
-{
-    TopAppBar(title = {Box(modifier=Modifier.fillMaxWidth().padding(start = 32.dp), contentAlignment = Alignment.CenterStart){ Text("GEST-FUT V2.0", style = ToolbarTitleStyle)}},
+fun MiTopBar(compartir: () -> Unit) {
+    TopAppBar(
+        title = {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 32.dp),
+            contentAlignment = Alignment.CenterStart
+        ) { Text("GEST-FUT V2.0", style = ToolbarTitleStyle) }
+    },
         navigationIcon = {
             Image(
                 painter = painterResource(R.drawable.ic_lfp_vector_logo),
@@ -35,6 +44,8 @@ fun MiTopBar()
                 modifier = Modifier
                     .size(70.dp)
                     .padding(start = 16.dp)
-            )},
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary))
+            )
+        }, actions = { IconButton(onClick = compartir) { Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir") } },
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+    )
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.gestfut.data.EquipoProveedor
 import com.example.gestfut.data.Partido
 import com.example.gestfut_compose.R
+import com.example.gestfut_compose.funciones.obtenerIdEscudo
 import com.example.gestfut_compose.ui.theme.ColorAccent
 import com.example.gestfut_compose.ui.theme.ColorPrimaryDark
 import java.text.SimpleDateFormat
@@ -35,8 +36,7 @@ import java.util.Date
 @Composable
 fun partidoItem(partido: Partido) {
     var contexto = LocalContext.current
-    val identificadorImagen =
-        contexto.resources.getIdentifier(buscarEscudoEquipo(partido.equipo_local), null, null)
+
 
     Card(
         modifier = Modifier
@@ -54,7 +54,7 @@ fun partidoItem(partido: Partido) {
             ) {
                 // Logo local
                 Image(
-                    painter = painterResource(if (identificadorImagen != 0) identificadorImagen else R.drawable.ic_soccer),
+                    painter = painterResource(obtenerIdEscudo(partido.equipo_local)),
                     contentDescription = "Logo Local",
                     modifier = Modifier.size(40.dp),
                     contentScale = ContentScale.Crop
@@ -94,7 +94,7 @@ fun partidoItem(partido: Partido) {
 
                 // Logo visitante
                 Image(
-                    painter = painterResource(R.drawable.ic_soccer),
+                    painter = painterResource(obtenerIdEscudo(partido.equipo_visitante)),
                     contentDescription = "Logo Visitante",
                     modifier = Modifier.size(40.dp),
                     contentScale = ContentScale.Crop
@@ -132,13 +132,9 @@ fun partidoItem(partido: Partido) {
             )
         }
     }
-}
 
-fun buscarEscudoEquipo(nombreEquipo: String): (String) {
-    var equipos = EquipoProveedor.equipos;
-    return equipos.find { it.nombre == nombreEquipo }?.escudo ?: ""
-}
 
+}
 
 @Preview
 @Composable
