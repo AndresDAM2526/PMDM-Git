@@ -1,0 +1,32 @@
+[
+  {
+    "nombre": "Ana Martínez",
+    "telefono": "612345678",
+    "email": "ana.martinez@email.com",
+    "foto": null
+  },
+  {
+    "nombre": "Carlos Gómez",
+    "telefono": "698745123",
+    "email": "carlos.gomez@email.com",
+    "foto": null
+  },
+  {
+    "nombre": "Laura Sánchez",
+    "telefono": "677889900",
+    "email": "laura.sanchez@email.com",
+    "foto": null
+  },
+  {
+    "nombre": "Miguel Rodríguez",
+    "telefono": "655443322",
+    "email": "miguel.rodriguez@email.com",
+    "foto": null
+  },
+  {
+    "nombre": "Sofía López",
+    "telefono": "699112233",
+    "email": "sofia.lopez@email.com",
+    "foto": null
+  }
+]
